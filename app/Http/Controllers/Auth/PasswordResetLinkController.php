@@ -26,16 +26,16 @@ class PasswordResetLinkController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // 1. Validar usando 'correoInstitucional'
+        // 1. Validar usando 'email'
         $request->validate([
-            'correoInstitucional' => ['required', 'email'], // Validamos nuestro campo
+            'email' => ['required', 'email'], // Validamos nuestro campo
         ]);
 
         // 2. Intentar enviar el enlace usando el nombre de columna correcto como clave
-        // Al pasar ['correoInstitucional' => $value], EloquentUserProvider
-        // debería generar la consulta WHERE `correoInstitucional` = $value.
+        // Al pasar ['email' => $value], EloquentUserProvider
+        // debería generar la consulta WHERE `email` = $value.
         $status = Password::sendResetLink(
-            $request->only('correoInstitucional') // <-- Cambio Clave: Pasar solo el campo real
+            $request->only('email') // <-- Cambio Clave: Pasar solo el campo real
         );
 
         // 3. Redirigir con el estado
@@ -43,7 +43,7 @@ class PasswordResetLinkController extends Controller
                     // Si se envió, regresa con mensaje de éxito
                     ? back()->with('status', __($status))
                     // Si falló (ej. email no encontrado), regresa con error y el input
-                    : back()->withInput($request->only('correoInstitucional')) // <-- Devolvemos el input correcto
-                          ->withErrors(['correoInstitucional' => __($status)]); // <-- Asociamos error al campo correcto
+                    : back()->withInput($request->only('email')) // <-- Devolvemos el input correcto
+                          ->withErrors(['email' => __($status)]); // <-- Asociamos error al campo correcto
     }
 }

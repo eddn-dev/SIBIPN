@@ -54,9 +54,9 @@
             <div>
                 {{-- El controlador de Breeze validará 'email' por defecto, necesitarás adaptar el controlador o cambiar el name aquí a 'email' y mantener la label/placeholder como 'Correo Institucional' --}}
                 {{-- Opción 1 (Recomendada): Adaptar el controlador para validar 'correoInstitucional' --}}
-                <label for="correoInstitucional" class="block text-sm font-medium text-ipn-gray-dark">Correo Institucional</label>
-                <input id="correoInstitucional" name="correoInstitucional" type="email" autocomplete="email" required
-                       value="{{ old('correoInstitucional') }}"
+                <label for="email" class="block text-sm font-medium text-ipn-gray-dark">Correo Institucional</label>
+                <input id="email" name="email" type="email" autocomplete="email" required
+                       value="{{ old('email') }}"
                        class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-ipn-gray-dark rounded-md focus:outline-none focus:ring-ipn-guinda focus:border-ipn-guinda sm:text-sm @error('correoInstitucional') border-red-500 @enderror @error('email') border-red-500 @enderror" {{-- Añadido @error('email') por si acaso --}}
                        placeholder="usuario@ipn.mx o usuario@alumno.ipn.mx">
                 @error('correoInstitucional')

@@ -19,12 +19,12 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'correoInstitucional' => 'required|email',
+            'email' => 'required|email',
             'password'            => 'required|string',
         ]);
 
         if (Auth::attempt([
-                'correoInstitucional' => $credentials['correoInstitucional'],
+                'email'               => $credentials['email'],
                 'password'            => $credentials['password'],
                 'estadoUsuario'       => 'Activo'
             ], $request->filled('remember'))
@@ -39,7 +39,7 @@ class LoginController extends Controller
         }
 
         return back()->withErrors([
-            'correoInstitucional' => 'Credenciales inválidas o cuenta no activa.',
+            'email' => 'Credenciales inválidas o cuenta no activa.',
         ]);
     }
 

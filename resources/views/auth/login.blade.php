@@ -38,15 +38,14 @@
                 </div>
             @enderror
 
-
             <input type="hidden" name="remember" value="true"> {{-- Simplificación, el checkbox controlará --}}
 
             <div class="rounded-md shadow-sm -space-y-px">
                 {{-- Campo Correo Institucional --}}
                 <div>
-                    <label for="correoInstitucional" class="sr-only">Correo Institucional</label>
-                    <input id="correoInstitucional" name="correoInstitucional" type="email" autocomplete="email" required
-                           value="{{ old('correoInstitucional', old('email')) }}" {{-- Usa old() para ambos posibles nombres --}}
+                    <label for="email" class="sr-only">Correo Institucional</label>
+                    <input id="email" name="email" type="email" autocomplete="email" required
+                           value="{{ old('email', old('email')) }}" {{-- Usa old() para ambos posibles nombres --}}
                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-ipn-gray-dark rounded-t-md focus:outline-none focus:ring-ipn-guinda focus:border-ipn-guinda focus:z-10 sm:text-sm @error('correoInstitucional') border-red-500 @enderror @error('email') border-red-500 @enderror"
                            placeholder="Correo Institucional (@ipn.mx / @alumno.ipn.mx)">
                 </div>

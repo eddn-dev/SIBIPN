@@ -33,20 +33,20 @@ class NewPasswordController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // 1. Validar usando 'correoInstitucional'
+        // 1. Validar usando 'email'
         $request->validate([
             'token' => ['required'],
-            'correoInstitucional' => ['required', 'email'], // Tu campo
+            'email' => ['required', 'email'], // Tu campo
             'password' => ['required', 'confirmed', Rules\Password::defaults()], // Validación de Breeze
         ]);
 
         // 2. Intentar resetear la contraseña
-        // Pasamos 'correoInstitucional' con la clave 'email' que espera el Broker
-        // OJO: Si el PasswordBroker sigue fallando al BUSCAR el usuario con correoInstitucional aquí,
-        // podríamos necesitar pasar ['email' => $request->correoInstitucional] como en PasswordResetLinkController
-        // Pero probemos primero asumiendo que el token + correoInstitucional son suficientes.
+        // Pasamos 'email' con la clave 'email' que espera el Broker
+        // OJO: Si el PasswordBroker sigue fallando al BUSCAR el usuario con email aquí,
+        // podríamos necesitar pasar ['email' => $request->email] como en PasswordResetLinkController
+        // Pero probemos primero asumiendo que el token + email son suficientes.
         $status = Password::reset(
-            $request->only('correoInstitucional', 'password', 'password_confirmation', 'token'),
+            $request->only('email', 'password', 'password_confirmation', 'token'),
             // El callback ahora recibe nuestro modelo Usuario
             function (Usuario $usuario) use ($request) {
                 Log::info('RESET PW CALLBACK: Actualizando contraseña para usuario ID: ' . $usuario->idUsuario);
@@ -71,7 +71,7 @@ class NewPasswordController extends Controller
                     // Si éxito, redirige a login con mensaje de éxito
                     ? redirect()->route('login')->with('status', __($status))
                     // Si falla (ej. token inválido, email no coincide), regresa con error
-                    : back()->withInput($request->only('correoInstitucional'))
-                          ->withErrors(['correoInstitucional' => __($status)]); // Asociamos error al campo correcto
+                    : back()->withInput($request->only('email'))
+                          ->withErrors(['email' => __($status)]); // Asociamos error al campo correcto
     }
 }

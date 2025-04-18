@@ -28,7 +28,7 @@ class LoginRequest extends FormRequest
     {
         // Validamos correoInstitucional y password
         return [
-            'correoInstitucional' => ['required', 'string', 'email'],
+            'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ];
     }
@@ -46,7 +46,7 @@ class LoginRequest extends FormRequest
         // Auth::attempt ahora solo valida correo y contraseña.
         // La verificación del estado del correo se hará después por el middleware 'verified'.
         if (! Auth::attempt(
-                $this->only('correoInstitucional', 'password'), // Solo pasamos credenciales
+                $this->only('email', 'password'), // Solo pasamos credenciales
                 $this->boolean('remember')
             )
         ) {
@@ -54,7 +54,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'correoInstitucional' => __('auth.failed'), // Mensaje genérico si falla por credenciales
+                'email' => __('auth.failed'), // Mensaje genérico si falla por credenciales
             ]);
         }
 
@@ -77,7 +77,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'correoInstitucional' => trans('auth.throttle', [
+            'email' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -89,6 +89,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->input('correoInstitucional')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->input('email')).'|'.$this->ip());
     }
 }

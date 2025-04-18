@@ -42,7 +42,7 @@ class RegisteredUserController extends Controller
             'nombreCompleto'      => ['required', 'string', 'max:255'], // Tu campo
             'boleta'              => ['required', 'string', 'max:10', 'unique:'.Usuario::class], // Tu campo, validación unique
             // 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class], // Campo original de Breeze (reemplazado)
-            'correoInstitucional' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Usuario::class.',correoInstitucional'], // Tu campo, validación unique
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Usuario::class.',email'], // Tu campo, validación unique
             'idUnidadAcademica'   => ['required', 'string', 'exists:UnidadAcademica,idUnidadAcademica'], // Tu campo, validación exists
             'categoriaUsuario'    => ['required', 'string', 'in:AlumnoLicenciatura,AlumnoPosgrado,Investigador,Docente,Administrativo,Externo'], // Tu campo
             'password'            => ['required', 'confirmed', Rules\Password::defaults()], // Validación de contraseña de Breeze (usa reglas por defecto seguras)
@@ -50,10 +50,10 @@ class RegisteredUserController extends Controller
 
         // 2. Creación del Usuario adaptada
         $usuario = Usuario::create([
-            'idUsuario'           => Str::uuid(), // Genera UUID para tu PK
+            'id'           => Str::uuid(), // Genera UUID para tu PK
             'nombreCompleto'      => $request->nombreCompleto,
             'boleta'              => $request->boleta,
-            'correoInstitucional' => $request->correoInstitucional,
+            'email' => $request->email,
             'idUnidadAcademica'   => $request->idUnidadAcademica,
             'categoriaUsuario'    => $request->categoriaUsuario,
             // 'password'            => Hash::make($request->password), // Opción 1: Hashear aquí si NO usas el mutator en el modelo
