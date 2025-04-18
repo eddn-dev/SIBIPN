@@ -1,0 +1,38 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* --- Configuración del Tema Personalizado SIBIPN --- */
+@theme {
+    /* --- Colores Personalizados IPN --- */
+    --color-ipn-guinda: #5A1236;
+    --color-ipn-guinda-desat: #5B262E;
+    --color-ipn-gray-dark: #333333;
+    --color-ipn-gray: #999999;
+    --color-ipn-gray-light: #F1F1F1;
+    /* Añade otros colores si los necesitas */
+
+    /* --- Tipografía Personalizada --- */
+    --font-family-sans: 'Open Sans', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-roboto: 'Roboto', sans-serif;
+    --font-family-teko: 'Teko', sans-serif;
+
+    /* --- Otras Extensiones del Tema (Opcional) --- */
+}
+/* --- Fin Configuración del Tema --- */
+
+/* --- Estilos Base o Componentes Personalizados (Opcional) --- */
+body {
+    font-family: var(--font-family-sans); /* Aplicar la fuente sans-serif por defecto */
+    /* Otros estilos base */
+    @apply antialiased; /* Ejemplo de aplicar una utilidad Tailwind base */
+}
+
+.btn-guinda {
+    @apply px-4 py-2 /* bg-ipn-guinda */ text-white rounded /* hover:bg-ipn-guinda-desat */ transition duration-150;
+}
