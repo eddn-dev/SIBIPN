@@ -1,160 +1,193 @@
 {{-- resources/views/auth/register.blade.php --}}
-{{-- Reemplaza TODO el contenido de este archivo con este código --}}
-
-@extends('layouts.app') {{-- Usa tu layout principal --}}
+@extends('layouts.auth')
 
 @section('title', 'Registro - SIBIPN')
 
 @section('content')
-<div class="min-h-[calc(100vh-128px)] flex items-center justify-center bg-ipn-gray-light py-12 px-4 sm:px-6 lg:px-8"> {{-- Contenedor centrado --}}
-    {{-- Ajusta max-w-lg o max-w-xl según el ancho deseado para el formulario más largo --}}
-    <div class="max-w-lg w-full space-y-8 bg-white p-8 sm:p-10 rounded-xl shadow-xl border border-gray-200">
-        {{-- Encabezado del Formulario --}}
-        <div>
-            {{-- Logo SIBIPN --}}
-            <img class="mx-auto h-12 w-auto" src="{{ asset('images/logo_sibipn.svg') }}" alt="SIBIPN">
-            <h2 class="mt-6 text-center text-3xl font-teko font-bold text-ipn-guinda">
-                Crear Cuenta en SIBIPN
-            </h2>
-            <p class="mt-2 text-center text-sm text-ipn-gray">
-                Completa tus datos para registrarte.
+<div class="min-h-screen flex flex-col md:flex-row bg-ipn-gray-light"
+     x-data="{ step: 1, maxStep: 2 }">
+
+    {{-- Imagen lateral --}}
+    <div class="relative md:w-1/2 w-full h-40 sm:h-56 md:h-auto">
+        <img src="{{ asset('images/hero.jpg') }}" alt="SIBIPN"
+             class="absolute inset-0 w-full h-full object-cover brightness-75">
+        <div class="absolute inset-0 bg-ipn-guinda opacity-60"></div>
+    </div>
+
+    {{-- Formulario --}}
+    <div class="flex flex-1 items-center justify-center p-6 bg-white">
+        <div class="w-full max-w-md">
+
+            {{-- Encabezado --}}
+            <div class="text-center mb-6">
+                <img src="{{ asset('images/logo_sibipn.svg') }}" alt="SIBIPN" class="mx-auto h-10 mb-4">
+                <h2 class="text-2xl font-teko font-bold text-ipn-guinda">Crear&nbsp;Cuenta</h2>
+                <p class="text-sm text-ipn-gray">Completa los pasos para registrarte</p>
+            </div>
+
+            {{-- Barra de progreso --}}
+            <div class="flex items-center mb-6">
+                <template x-for="n in maxStep" :key="n">
+                    <div class="flex-1 mx-1">
+                        <div class="h-1 bg-gray-200 rounded-full overflow-hidden">
+                            <div :class="step>=n ? 'bg-ipn-guinda' : 'bg-gray-300'" class="h-full transition-all"></div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <form method="POST" action="{{ route('register') }}" class="space-y-6">
+                @csrf
+
+                {{-- Contenedor con altura fija para evitar desbordes --}}
+                <div class="relative overflow-hidden h-[320px]">
+
+                    {{-- === PASO 1 ================================================= --}}
+                    <div  x-show="step===1"
+                          x-transition:leave="transition-opacity duration-200"
+                          x-transition:leave-start="opacity-100"
+                          x-transition:leave-end="opacity-0"
+                          x-transition:enter="transition-opacity duration-200 delay-200"
+                          x-transition:enter-start="opacity-0"
+                          x-transition:enter-end="opacity-100"
+                          class="absolute inset-0 space-y-4 px-1">
+                        
+
+                        {{-- Nombre --}}
+                        <div>
+                            <label class="block text-sm font-medium text-ipn-gray-dark">Nombre Completo</label>
+                            <input name="nombreCompleto" type="text" required
+                                   value="{{ old('nombreCompleto') }}"
+                                   placeholder="Nombre(s) Apellido"
+                                   class="sib-input @error('nombreCompleto') border-red-500 focus:ring-red-500 @enderror">
+                            @error('nombreCompleto')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                        </div>
+
+                        {{-- Boleta --}}
+                        <div>
+                            <label class="block text-sm font-medium text-ipn-gray-dark">Boleta / No. Empleado</label>
+                            <input name="boleta" type="text" required
+                                   value="{{ old('boleta') }}"
+                                   placeholder="2020XXXXXX"
+                                   class="sib-input @error('boleta') border-red-500 focus:ring-red-500 @enderror">
+                            @error('boleta')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                        </div>
+
+                        {{-- Categoría --}}
+                        <div>
+                            <label class="block text-sm font-medium text-ipn-gray-dark">Categoría</label>
+                            <select name="categoriaUsuario" required
+                                    class="sib-input @error('categoriaUsuario') border-red-500 focus:ring-red-500 @enderror">
+                                <option value="" disabled {{ old('categoriaUsuario')?'':'selected' }}>Selecciona categoría</option>
+                                @foreach([
+                                  'AlumnoBachillerato'=>'Alumno Bachillerato',
+                                  'AlumnoLicenciatura'=>'Alumno Licenciatura',
+                                  'AlumnoPosgrado'=>'Alumno Posgrado',
+                                  'Investigador'=>'Investigador',
+                                  'Docente'=>'Docente',
+                                  'Administrativo'=>'Personal Administrativo',
+                                  'Externo'=>'Usuario Externo'
+                                ] as $val => $label)
+                                  <option value="{{ $val }}" {{ old('categoriaUsuario')==$val?'selected':'' }}>
+                                      {{ $label }}
+                                  </option>
+                                @endforeach
+                            </select>
+                            @error('categoriaUsuario')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                        </div>
+
+                        {{-- Unidad --}}
+                        <div>
+                            <label class="block text-sm font-medium text-ipn-gray-dark">Unidad Académica</label>
+                            <select name="idUnidadAcademica" required
+                                    class="sib-input @error('idUnidadAcademica') border-red-500 focus:ring-red-500 @enderror">
+                                <option value="" disabled {{ old('idUnidadAcademica')?'':'selected' }}>Selecciona unidad</option>
+                                @foreach($unidadesAcademicas as $u)
+                                    <option value="{{ $u->idUnidadAcademica }}"
+                                            {{ old('idUnidadAcademica')==$u->idUnidadAcademica?'selected':'' }}>
+                                        {{ $u->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('idUnidadAcademica')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                        </div>
+                    </div>
+
+                    {{-- === PASO 2 ================================================= --}}
+                    <div  x-show="step===2"
+                          x-transition:leave="transition-opacity duration-200"
+                          x-transition:leave-start="opacity-100"
+                          x-transition:leave-end="opacity-0"
+                          x-transition:enter="transition-opacity duration-200 delay-200"
+                          x-transition:enter-start="opacity-0"
+                          x-transition:enter-end="opacity-100"
+                          class="absolute inset-0 space-y-4 px-1"
+                          x-cloak>
+
+                        <h3 class="text-lg font-semibold text-ipn-guinda">Datos&nbsp;de&nbsp;la&nbsp;cuenta</h3>
+
+                        {{-- Correo --}}
+                        <div>
+                            <label class="block text-sm font-medium text-ipn-gray-dark">Correo Institucional</label>
+                            <input name="email" type="email" required
+                                   value="{{ old('email') }}"
+                                   placeholder="usuario@ipn.mx"
+                                   class="sib-input @error('email') border-red-500 focus:ring-red-500 @enderror">
+                            @error('email')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                        </div>
+
+                        {{-- Contraseña --}}
+                        <div>
+                            <label class="block text-sm font-medium text-ipn-gray-dark">Contraseña</label>
+                            <input name="password" type="password" required
+                                   placeholder="Mín. 8 caracteres"
+                                   class="sib-input @error('password') border-red-500 focus:ring-red-500 @enderror">
+                            @error('password')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                        </div>
+
+                        {{-- Confirmar --}}
+                        <div>
+                            <label class="block text-sm font-medium text-ipn-gray-dark">Confirmar Contraseña</label>
+                            <input name="password_confirmation" type="password" required
+                                   placeholder="Repite contraseña"
+                                   class="sib-input">
+                        </div>
+                    </div>
+
+                </div>
+
+                {{-- Navegación --}}
+                <div class="flex justify-between pt-4">
+                    <button type="button" @click="step--"
+                            x-show="step>1"
+                            class="btn-pill btn-secondary"
+                            x-cloak>
+                        Anterior
+                    </button>
+
+                    <div class="ml-auto space-x-2">
+                        <button type="button" @click="step++"
+                                x-show="step<maxStep"
+                                class="btn-pill btn-primary"
+                                x-cloak>
+                            Siguiente
+                        </button>
+                        <button type="submit"
+                                x-show="step===maxStep"
+                                class="btn-pill btn-primary"
+                                x-cloak>
+                            Finalizar
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            {{-- Enlace a login --}}
+            <p class="mt-6 text-center text-sm text-ipn-gray">
+                ¿Ya tienes cuenta?
+                <a href="{{ route('login') }}" class="text-ipn-guinda hover:underline">Inicia Sesión</a>
             </p>
-        </div>
 
-        {{-- Formulario de Registro --}}
-        {{-- La ruta 'register' ahora apunta al RegisteredUserController@store de Breeze --}}
-        <form class="mt-8 space-y-6" method="POST" action="{{ route('register') }}">
-            @csrf {{-- Protección CSRF --}}
-
-            {{-- Campo Nombre Completo --}}
-            <div>
-                <label for="nombreCompleto" class="block text-sm font-medium text-ipn-gray-dark">Nombre Completo</label>
-                <input id="nombreCompleto" name="nombreCompleto" type="text" autocomplete="name" required
-                       value="{{ old('nombreCompleto') }}"
-                       class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-ipn-gray-dark rounded-md focus:outline-none focus:ring-ipn-guinda focus:border-ipn-guinda sm:text-sm @error('nombreCompleto') border-red-500 @enderror"
-                       placeholder="Nombre(s) Apellido Paterno Apellido Materno">
-                @error('nombreCompleto')
-                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            {{-- Campo Boleta / No. Empleado --}}
-            <div>
-                <label for="boleta" class="block text-sm font-medium text-ipn-gray-dark">Boleta / Número de Empleado</label>
-                <input id="boleta" name="boleta" type="text" required
-                       value="{{ old('boleta') }}"
-                       class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-ipn-gray-dark rounded-md focus:outline-none focus:ring-ipn-guinda focus:border-ipn-guinda sm:text-sm @error('boleta') border-red-500 @enderror"
-                       placeholder="Ej: 2020XXXXXX o 123456">
-                @error('boleta')
-                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            {{-- Campo Correo Institucional --}}
-            <div>
-                {{-- El controlador de Breeze validará 'email' por defecto, necesitarás adaptar el controlador o cambiar el name aquí a 'email' y mantener la label/placeholder como 'Correo Institucional' --}}
-                {{-- Opción 1 (Recomendada): Adaptar el controlador para validar 'correoInstitucional' --}}
-                <label for="email" class="block text-sm font-medium text-ipn-gray-dark">Correo Institucional</label>
-                <input id="email" name="email" type="email" autocomplete="email" required
-                       value="{{ old('email') }}"
-                       class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-ipn-gray-dark rounded-md focus:outline-none focus:ring-ipn-guinda focus:border-ipn-guinda sm:text-sm @error('correoInstitucional') border-red-500 @enderror @error('email') border-red-500 @enderror" {{-- Añadido @error('email') por si acaso --}}
-                       placeholder="usuario@ipn.mx o usuario@alumno.ipn.mx">
-                @error('correoInstitucional')
-                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
-                @enderror
-                 @error('email') {{-- Error por si el controlador aún usa 'email' --}}
-                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
-                @enderror
-                 {{-- Opción 2: Usar name="email" aquí y adaptar el controlador para guardar en 'correoInstitucional' --}}
-                 {{--
-                 <label for="email" class="block text-sm font-medium text-ipn-gray-dark">Correo Institucional</label>
-                 <input id="email" name="email" type="email" autocomplete="email" required
-                        value="{{ old('email') }}"
-                        class="mt-1 ... @error('email') border-red-500 @enderror"
-                        placeholder="usuario@ipn.mx o usuario@alumno.ipn.mx">
-                 @error('email') ... @enderror
-                 --}}
-            </div>
-
-            {{-- Campo Unidad Académica --}}
-            <div>
-                <label for="idUnidadAcademica" class="block text-sm font-medium text-ipn-gray-dark">Unidad Académica / Dependencia</label>
-                 {{-- Asegúrate de pasar $unidadesAcademicas desde RegisteredUserController@create --}}
-                <select id="idUnidadAcademica" name="idUnidadAcademica" required
-                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-ipn-guinda focus:border-ipn-guinda sm:text-sm rounded-md @error('idUnidadAcademica') border-red-500 @enderror">
-                    <option value="" disabled {{ old('idUnidadAcademica') ? '' : 'selected' }}>Selecciona tu Unidad Académica</option>
-                    @isset($unidadesAcademicas)
-                        @foreach($unidadesAcademicas as $unidad)
-                            <option value="{{ $unidad->idUnidadAcademica }}" {{ old('idUnidadAcademica') == $unidad->idUnidadAcademica ? 'selected' : '' }}>
-                                {{ $unidad->nombre }} {{ $unidad->siglas ? '('.$unidad->siglas.')' : '' }}
-                            </option>
-                        @endforeach
-                    @else
-                         <option value="" disabled>Error: No se cargaron las unidades académicas.</option>
-                    @endisset
-                </select>
-                 @error('idUnidadAcademica')
-                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-             {{-- Campo Categoría de Usuario --}}
-            <div>
-                <label for="categoriaUsuario" class="block text-sm font-medium text-ipn-gray-dark">Categoría</label>
-                <select id="categoriaUsuario" name="categoriaUsuario" required
-                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-ipn-guinda focus:border-ipn-guinda sm:text-sm rounded-md @error('categoriaUsuario') border-red-500 @enderror">
-                    <option value="" disabled {{ old('categoriaUsuario') ? '' : 'selected' }}>Selecciona tu categoría</option>
-                    <option value="AlumnoLicenciatura" {{ old('categoriaUsuario') == 'AlumnoLicenciatura' ? 'selected' : '' }}>Alumno Licenciatura</option>
-                    <option value="AlumnoPosgrado" {{ old('categoriaUsuario') == 'AlumnoPosgrado' ? 'selected' : '' }}>Alumno Posgrado</option>
-                    <option value="Investigador" {{ old('categoriaUsuario') == 'Investigador' ? 'selected' : '' }}>Investigador</option>
-                    <option value="Docente" {{ old('categoriaUsuario') == 'Docente' ? 'selected' : '' }}>Docente</option>
-                    <option value="Administrativo" {{ old('categoriaUsuario') == 'Administrativo' ? 'selected' : '' }}>Personal Administrativo (PAAE)</option>
-                    <option value="Externo" {{ old('categoriaUsuario') == 'Externo' ? 'selected' : '' }}>Usuario Externo</option>
-                </select>
-                 @error('categoriaUsuario')
-                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            {{-- Campo Contraseña --}}
-            <div>
-                <label for="password" class="block text-sm font-medium text-ipn-gray-dark">Contraseña</label>
-                <input id="password" name="password" type="password" autocomplete="new-password" required
-                       class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-ipn-gray-dark rounded-md focus:outline-none focus:ring-ipn-guinda focus:border-ipn-guinda sm:text-sm @error('password') border-red-500 @enderror"
-                       placeholder="Mínimo 8 caracteres">
-                 @error('password')
-                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            {{-- Campo Confirmar Contraseña --}}
-            <div>
-                <label for="password_confirmation" class="block text-sm font-medium text-ipn-gray-dark">Confirmar Contraseña</label>
-                <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required
-                       class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-ipn-gray-dark rounded-md focus:outline-none focus:ring-ipn-guinda focus:border-ipn-guinda sm:text-sm"
-                       placeholder="Repite la contraseña">
-                {{-- El error de confirmación usualmente se muestra bajo el campo 'password' --}}
-            </div>
-
-            {{-- Botón de Envío --}}
-            <div>
-                <button type="submit"
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-ipn-guinda hover:bg-ipn-guinda-desat focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ipn-guinda transition duration-150 ease-in-out">
-                    Registrarse
-                </button>
-            </div>
-        </form>
-
-         {{-- Enlace a Login --}}
-         <div class="text-sm text-center">
-            <p class="text-ipn-gray">¿Ya tienes una cuenta?
-                {{-- La ruta 'login' la crea Breeze --}}
-                @if (Route::has('login'))
-                    <a href="{{ route('login') }}" class="font-medium text-ipn-guinda hover:underline">
-                        Inicia sesión aquí
-                    </a>
-                @endif
-            </p>
         </div>
     </div>
 </div>

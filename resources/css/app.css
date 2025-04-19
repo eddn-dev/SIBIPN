@@ -1,38 +1,219 @@
+/* ────────────────────────────────────────────────────────────────
+  0)  Tailwind  +  rutas que inspecciona TW‑4
+──────────────────────────────────────────────────────────────── */
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* --- Configuración del Tema Personalizado SIBIPN --- */
-@theme {
-    /* --- Colores Personalizados IPN --- */
-    --color-ipn-guinda: #5A1236;
-    --color-ipn-guinda-desat: #5B262E;
-    --color-ipn-gray-dark: #333333;
-    --color-ipn-gray: #999999;
-    --color-ipn-gray-light: #F1F1F1;
-    /* Añade otros colores si los necesitas */
 
-    /* --- Tipografía Personalizada --- */
-    --font-family-sans: 'Open Sans', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    --font-family-roboto: 'Roboto', sans-serif;
-    --font-family-teko: 'Teko', sans-serif;
 
-    /* --- Otras Extensiones del Tema (Opcional) --- */
-}
-/* --- Fin Configuración del Tema --- */
+/* ────────────────────────────────────────────────────────────────
+ 1)  Custom‑props del tema IPN
+──────────────────────────────────────────────────────────────── */
+@theme{
+  --color-ipn-guinda:       #5A1236;
+  --color-ipn-guinda-dark:       #35081f;
+  --color-ipn-guinda-light: #7A2A4D;
+  --color-ipn-guinda-desat: #5B262E;
+  --color-ipn-gray-dark:    #333333;
+  --color-ipn-gray:         #999999;
+  /*--color-ipn-gray-lighten:  #e8e1e1;*/
+  --color-ipn-gray-lighten: #e5a5c1;
+  --color-ipn-gray-light:   #F1F1F1;
 
-/* --- Estilos Base o Componentes Personalizados (Opcional) --- */
-body {
-    font-family: var(--font-family-sans); /* Aplicar la fuente sans-serif por defecto */
-    /* Otros estilos base */
-    @apply antialiased; /* Ejemplo de aplicar una utilidad Tailwind base */
+  --font-family-sans:   'Open Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-family-roboto: 'Roboto',    sans-serif;
+  --font-family-teko:   'Teko',      sans-serif;
 }
 
-.btn-guinda {
-    @apply px-4 py-2 /* bg-ipn-guinda */ text-white rounded /* hover:bg-ipn-guinda-desat */ transition duration-150;
+
+/* ────────────────────────────────────────────────────────────────
+ 2)  Base extra
+──────────────────────────────────────────────────────────────── */
+@layer base{
+  body{
+    font-family: var(--font-family-sans);
+    color: #35081f;
+    @apply antialiased;
+  }
 }
+
+
+/* ────────────────────────────────────────────────────────────────
+ 3)  Componentes reutilizables
+──────────────────────────────────────────────────────────────── */
+@layer components{
+
+/* 3‑A  INPUT redondeado coherente */
+.sib-input{
+  @apply block w-full bg-transparent border border-gray-300 rounded-xl
+         px-3 py-2 placeholder-[var(--color-ipn-gray)]
+         text-[var(--color-ipn-gray-dark)]
+         focus:outline-none focus:ring-2 focus:ring-[var(--color-ipn-guinda)]
+         focus:border-[var(--color-ipn-guinda)]
+         transition-colors duration-200;
+}
+
+/* 3‑B  BOTONES “pill” gris‑claro */
+.btn-base{
+  @apply inline-flex items-center justify-center gap-2
+  px-9 py-3 rounded-full font-medium select-none
+         transition-transform duration-200 ease-in-out
+         transform relative overflow-hidden;
+}
+
+/* primario: gris claro + texto gris oscuro */
+.btn-primary{
+  @apply inline-flex items-center justify-center gap-2
+          px-9 py-3 rounded-full font-medium select-none
+         transition-transform duration-200 ease-in-out
+         transform relative overflow-hidden
+         bg-[var(--color-ipn-gray-lighten)] text-[var(--color-ipn-gray-dark)]
+         border border-[var(--color-white)]
+         focus:ring-2 focus:ring-offset-2 focus:ring-[var(--color-ipn-guinda)];
+}
+
+/* secundario: gris claro + texto guinda */
+.btn-secondary{
+  @apply inline-flex items-center justify-center gap-2
+  px-9 py-3 rounded-full font-medium select-none
+         transition-transform duration-200 ease-in-out
+         transform relative overflow-hidden
+         bg-[var(--color-ipn-gray-lighten)] text-[var(--color-ipn-guinda)]
+         border border-[var(--color-white)]
+         focus:ring-2 focus:ring-offset-2 focus:ring-[var(--color-ipn-guinda)];
+}
+
+
+/* contenedor relativo que agrupa halo + <a> */
+.bubble-box { @apply relative inline-block; }
+
+/* halo base (rastro de luz) — detrás del botón */
+.bubble-halo {
+  @apply absolute inset-y-[-15%] left-[-5%] right-[-5%] rounded-full /* Reducimos un poco el inset vertical */
+         opacity-0 transition-opacity duration-300 ease-in-out /* Opacidad transiciona */
+         pointer-events-none;
+
+  /* Fondo degradado más sutil para el rastro */
+  background: linear-gradient(to right,
+    #fc9ecd66 0%, /* Más transparente al inicio */
+    #fc9ecd22 40%,
+    transparent 60%); /* Fade out más rápido */
+
+  filter: blur(12px); /* Blur para el rastro */
+  z-index: 0;
+
+  /* Necesario para posicionar el ::after */
+  position: absolute;
+}
+
+/* === NUEVO: Pseudo-elemento para el brillo concentrado === */
+.bubble-halo::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  /* Tamaño del círculo luminoso (ajusta según necesites) */
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+
+  /* Color y forma del brillo */
+  background: radial-gradient(circle at 50% 50%,
+    rgba(255, 255, 255, 0.9) 0%, /* Blanco brillante en el centro */
+    rgba(243, 200, 213, 0.7) 50%, /* Rosa F3C8D5 con alpha */
+    transparent 70%); /* Fade out */
+
+  /* Blur propio para el círculo */
+  filter: blur(8px); /* Un blur ligeramente menor que el halo base */
+
+  /* --- Posicionamiento dinámico --- */
+  /* Por defecto (o cuando 'halo-glow-left'): a la izquierda */
+  left: 0;
+  /* Centrado verticalmente y ligeramente desplazado hacia adentro desde el borde */
+  transform: translateY(-50%) translateX(-20%); /* Desplazado un poco hacia adentro */
+  /* Transición para el movimiento */
+  transition: left 0.4s ease, right 0.4s ease, transform 0.4s ease;
+
+  /* Aseguramos que esté encima del fondo del halo base, pero detrás del botón */
+  z-index: 1;
+}
+
+/* Regla para cuando la clase 'halo-glow-right' está activa */
+.bubble-halo.halo-glow-right::after {
+  left: auto; /* Desactiva 'left' */
+  right: 0; /* Activa 'right' */
+  /* Centrado verticalmente y ligeramente desplazado hacia adentro desde el borde derecho */
+  transform: translateY(-50%);
+}
+
+/* ... (resto de estilos .bubble-track, .bubble-core) ... */
+/* disco que sigue al cursor */
+.bubble-track{
+  @apply absolute top-1/2 h-[120px] w-[120px] -translate-y-1/2;
+  left:50%;                  /* reposicionado en X por JS */
+  pointer-events:none;
+  z-index:0;
+}
+
+/* disco luminoso con blur + degradado rosa → gris‑claro */
+.bubble-core{
+  @apply absolute inset-0 rounded-full;
+  filter: blur(6px);
+  background:radial-gradient(circle at 50% 50%,
+    #ffffff               0%,
+    #f3c8d5              50%,
+    #eccaca              70%,
+    var(--color-ipn-gray-lighten) 100%);
+}
+
+
+} /* ─── fin @layer components ─── */
+
+
+/* ────────────────────────────────────────────────────────────────
+ 4)  Separadores diagonales (no‑TW)
+──────────────────────────────────────────────────────────────── */
+.separator-sup-der::before,
+.separator-sup-left::before{
+  content:''; position:absolute; top:0; left:0; width:100%; height:30px;
+  background:var(--color-ipn-guinda); z-index:5;
+}
+.separator-sup-der::before { transform:skewY(-1deg); transform-origin:top left; }
+.separator-sup-left::before{ transform:skewY( 1deg); transform-origin:top right; }
+.separator-content-fix     { position:relative; z-index:10; }
+
+.separator-sup-der-dark::before,
+.separator-sup-left-dark::before{
+  content:''; position:absolute; top:0; left:0; width:100%; height:30px;
+  background:var(--color-ipn-guinda-dark); z-index:5;
+}
+.separator-sup-der-dark::before { transform:skewY(-1deg); transform-origin:top left; }
+.separator-sup-left-dark::before{ transform:skewY( 1deg); transform-origin:top right; }
+.separator-content-fix     { position:relative; z-index:10; }
+/* ———————————————————————————————————————————————
+   UTILIDAD: .section-dark
+   Fondo guinda y tipografía clara de contraste
+   ——————————————————————————————————————————————— */
+   @layer utilities {
+    .section-dark{
+      @apply bg-[--color-ipn-guinda] text-white;
+    }
+  
+    /* textos secundarios gris‑claro sobre fondo guinda */
+    .section-dark .text-muted{
+      color: var(--color-ipn-gray-light);
+    }
+  
+    /* títulos en blanco  */
+    .section-dark h2,
+    .section-dark h3{
+      @apply text-white;
+    }
+  }
+  

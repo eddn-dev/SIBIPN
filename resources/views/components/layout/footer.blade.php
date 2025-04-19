@@ -1,8 +1,9 @@
 {{-- resources/views/components/layout/footer.blade.php --}}
-<footer>
+<footer class="relative separator-sup-der-dark">
+
     {{-- Footer 1: Footer del Sitio (Estilo oscuro - Gris Oscuro IPN) --}}
     {{-- Fondo cambiado a bg-ipn-gray-dark --}}
-    <div class="bg-ipn-gray-dark text-gray-300 py-12">
+    <div class="bg-ipn-guinda-dark text-gray-300 py-12">
         {{-- Contenedor y Grid estandarizados --}}
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

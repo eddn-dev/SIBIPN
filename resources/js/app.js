@@ -6,6 +6,9 @@ import './bootstrap'; // Importa configuración inicial (axios, etc.)
 import Alpine from 'alpinejs';
 import intersect from '@alpinejs/intersect'; // Importa el plugin Intersect
 import collapse from '@alpinejs/collapse';   // Importa el plugin Collapse
+// resources/js/app.js  (archivo principal que ya importas con Vite)
+import attachBubbleCTA from './bubble.js';
+attachBubbleCTA();          // autoinicializa todos los .bubble-cta
 
 // Registra los plugins con Alpine ANTES de iniciar
 Alpine.plugin(intersect);
