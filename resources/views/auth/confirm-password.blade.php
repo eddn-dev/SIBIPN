@@ -1,27 +1,61 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+{{-- resources/views/auth/confirm-password.blade.php --}}
+{{-- Asumiendo que usas un layout similar a los otros de auth --}}
+@extends('layouts.auth')
+
+@section('title', 'Confirmar Contraseña – SIBIPN')
+
+@section('content')
+<div class="min-h-screen flex flex-col md:flex-row bg-ipn-gray-light">
+
+    {{-- Imagen lateral --}}
+    <div class="relative md:w-1/2 w-full h-40 sm:h-56 md:h-auto">
+        <img src="{{ asset('images/hero.jpg') }}" alt="Confirmación SIBIPN"
+             class="absolute inset-0 w-full h-full object-cover brightness-75">
+        <div class="absolute inset-0 bg-ipn-guinda opacity-60"></div>
     </div>
 
-    <form method="POST" action="{{ route('password.confirm') }}">
-        @csrf
+    {{-- Tarjeta principal --}}
+    <div class="flex flex-1 items-center justify-center p-6 sm:p-8 md:p-12 bg-white">
+        <div class="w-full max-w-md space-y-6"> {{-- Reducido space-y --}}
 
-        <!-- Password -->
-        <div>
-            <x-input-label for="password" :value="__('Password')" />
+             {{-- Encabezado --}}
+            <div class="text-center">
+                 <svg class="mx-auto h-12 w-12 text-ipn-guinda" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                 </svg>
+                <h2 class="mt-4 text-2xl font-teko font-bold text-ipn-guinda">
+                    Confirmar Contraseña
+                </h2>
+                 <p class="mt-1 text-sm text-ipn-gray">
+                     Esta es un área segura. Por favor, confirma tu contraseña antes de continuar.
+                 </p>
+            </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            <form method="POST" action="{{ route('password.confirm') }}">
+                @csrf
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                {{-- Contraseña --}}
+                <div>
+                    <label for="password" class="block text-sm font-medium text-ipn-gray-dark mb-1">Contraseña <span class="text-red-500">*</span></label>
+                    <input id="password" class="sib-input @error('password') border-red-500 focus:ring-red-500 @enderror"
+                           type="password"
+                           name="password"
+                           required autocomplete="current-password"
+                           placeholder="••••••••">
+                    @error('password')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="flex justify-end mt-4">
+                    {{-- Botón: Reemplazando <x-primary-button> --}}
+                    <button type="submit" class="btn-base btn-auth-primary text-sm"> {{-- Tamaño texto ajustado --}}
+                        Confirmar
+                    </button>
+                </div>
+            </form>
         </div>
+    </div>
+</div>
+@endsection
 
-        <div class="flex justify-end mt-4">
-            <x-primary-button>
-                {{ __('Confirm') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>

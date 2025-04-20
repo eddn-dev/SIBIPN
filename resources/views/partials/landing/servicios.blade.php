@@ -1,4 +1,4 @@
-<section class="relative -mt-20 py-16 lg:py-24 lg:pb-36 bg-ipn-gray-light">
+<section class="relative py-16 bg-ipn-gray-light">
     <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-4xl lg:text-6xl font-teko font-bold text-left text-ipn-guinda mb-12 lg:mb-16"> {{-- Aumentado mb --}}
             Servicios Bibliotecarios

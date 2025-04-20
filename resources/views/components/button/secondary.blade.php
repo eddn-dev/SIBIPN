@@ -1,3 +1,4 @@
+{{-- resources/views/components/button/secondary.blade.php --}}
 @props(['href' => null, 'type' => 'submit'])
 
 @php
@@ -5,19 +6,14 @@
     $tag    = $isLink ? 'a' : 'button';
 @endphp
 
-<span class="bubble-box">
-    <span class="bubble-halo"></span>
+{{-- Renderiza directamente el botón, sin wrappers ni elementos de efecto halo --}}
+<{{ $tag }}
+    {{ $isLink ? "href=$href" : "type=$type" }}
+    {{-- Aplica clases base y la clase específica 'btn-secondary'. NO incluye 'bubble-cta' --}}
+    {{ $attributes->class('btn-base btn-secondary') }}>
 
-    <{{ $tag }}
-        {{ $isLink ? "href=$href" : "type=$type" }}
-        {{ $attributes->class('btn-base btn-secondary bubble-cta') }}>
-
-        <span class="bubble-track">
-            <span class="bubble-core"></span>
-        </span>
-
-        <span class="relative z-10 flex items-center gap-2">
-            {{ $slot }}
-        </span>
-    </{{ $tag }}>
-</span>
+    {{-- Contenido visible simple --}}
+    <span class="flex items-center gap-2">
+        {{ $slot }}
+    </span>
+</{{ $tag }}>

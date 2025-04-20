@@ -68,7 +68,7 @@
             <div class="hidden lg:block">
                 @guest
                     <a href="{{ route('login') }}"
-                       class="px-4 py-2 rounded-md text-sm font-medium border transition-colors duration-300"
+                       class="px-4 py-2 rounded-full text-sm font-medium border transition-colors duration-300"
                        :class="scrolled
                          ? 'border-ipn-guinda bg-ipn-guinda text-white hover:bg-ipn-guinda-desat'
                          : 'border-white bg-white text-ipn-guinda hover:bg-gray-100'">

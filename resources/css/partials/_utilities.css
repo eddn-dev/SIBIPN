@@ -1,0 +1,16 @@
+@layer utilities {
+    .section-dark{
+      @apply bg-[--color-ipn-guinda] text-white;
+    }
+  
+    /* textos secundarios gris‑claro sobre fondo guinda */
+    .section-dark .text-muted{
+      color: var(--color-ipn-gray-light);
+    }
+  
+    /* títulos en blanco  */
+    .section-dark h2,
+    .section-dark h3{
+      @apply text-white;
+    }
+  }

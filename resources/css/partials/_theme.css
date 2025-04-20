@@ -1,0 +1,15 @@
+@theme{
+    --color-ipn-guinda:         #5A1236;
+    --color-ipn-guinda-dark:    #35081f;
+    --color-ipn-guinda-light:   #7A2A4D;
+    --color-ipn-guinda-desat:   #5B262E;
+    --color-ipn-gray-dark:      #333333;
+    --color-ipn-gray:           #999999;
+    --color-ipn-gray-lighten:   #e5a5c1;
+    --color-ipn-gray-light:     #F1F1F1;
+  
+    --font-family-sans:     'Open Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-family-roboto:   'Roboto',    sans-serif;
+    --font-family-teko:     'Teko',      sans-serif;
+}
+  

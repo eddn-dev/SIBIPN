@@ -12,47 +12,52 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('usuarios', function (Blueprint $table) {
-            // --- CAMBIO CLAVE: Usar UUID como PK ---
+            // PK UUID
             $table->uuid('id')->primary()->comment('PK UUID para el usuario');
-            // --- FIN CAMBIO CLAVE ---
 
-            $table->string('nombreCompleto', 255)->comment('Nombre(s) y Apellidos del usuario.');
+            // --- NUEVOS CAMPOS DE NOMBRE ---
+            $table->string('nombre', 100)->comment('Nombre(s) del usuario.');
+            $table->string('p_apellido', 100)->comment('Primer apellido del usuario.');
+            $table->string('s_apellido', 100)->nullable()->comment('Segundo apellido del usuario (opcional).');
+            // --- FIN NUEVOS CAMPOS ---
+
+            // $table->string('nombreCompleto', 255)->comment('Nombre(s) y Apellidos del usuario.'); // <-- Campo anterior eliminado
+
             $table->string('boleta', 10)->unique()->comment('Boleta o número de empleado del usuario.');
             $table->string('email', 255)->unique()->comment('Correo electrónico institucional.');
-            $table->timestamp('email_verified_at')->nullable(); // Campo estándar para verificación
-            $table->string('password', 255)->comment('Hash de la contraseña.'); // Campo estándar para hash
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password', 255)->comment('Hash de la contraseña.');
 
-            // Tus campos personalizados
+            // Campos personalizados SIBIPN
             $table->string('idUnidadAcademica', 15);
-            $table->enum('categoriaUsuario', ['AlumnoLicenciatura', 'AlumnoPosgrado', 'Investigador', 'Docente', 'Administrativo', 'Externo'])->comment('Categoría principal del usuario.');
+            $table->enum('categoriaUsuario', ['AlumnoBachillerato', 'AlumnoLicenciatura', 'AlumnoPosgrado', 'Investigador', 'Docente', 'Administrativo', 'Externo'])->comment('Categoría principal del usuario.'); // Añadido AlumnoBachillerato
             $table->enum('estadoUsuario', ['Activo', 'Inactivo', 'Suspendido', 'PendienteConfirmacion'])->default('PendienteConfirmacion')->comment('Estado actual de la cuenta.');
-            $table->unsignedBigInteger('idRolAdmin')->nullable()->comment('Rol administrativo asignado (si aplica). FK a rol_admin.'); // Asume que rol_admin.id es BigInt
+            $table->unsignedBigInteger('idRolAdmin')->nullable()->comment('Rol administrativo asignado (si aplica). FK a rol_admin.');
 
-            $table->rememberToken(); // Añade la columna remember_token
+            $table->rememberToken();
 
-            // Timestamps personalizados (si los prefieres a created_at/updated_at)
-             $table->dateTime('fechaRegistro')->useCurrent()->comment('Fecha y hora en que se creó la cuenta.');
-             $table->dateTime('fechaUltimoAcceso')->nullable()->comment('Fecha y hora del último inicio de sesión exitoso.');
-             // Si prefieres los estándar, comenta las dos líneas anteriores y descomenta la siguiente:
-             // $table->timestamps();
+            // Timestamps (usando los estándar de Laravel ahora para simplicidad)
+            $table->timestamps(); // Esto crea created_at y updated_at
+            // $table->dateTime('fechaRegistro')->useCurrent()->comment('Fecha y hora en que se creó la cuenta.'); // Comentado
+            // $table->dateTime('fechaUltimoAcceso')->nullable()->comment('Fecha y hora del último inicio de sesión exitoso.'); // Comentado
 
 
-            // Índices (algunos ya creados por unique())
+            // Índices
             $table->index('idUnidadAcademica', 'fk_usuario_unidadacademica_idx');
             $table->index('idRolAdmin', 'fk_usuario_roladmin_idx');
             $table->index('categoriaUsuario', 'idx_usuario_categoria');
             $table->index('estadoUsuario', 'idx_usuario_estado');
+            // Podrías añadir índices combinados para apellidos si buscas mucho por nombre completo
+            // $table->index(['p_apellido', 's_apellido', 'nombre']);
 
-            // Claves Foráneas
-            // Asegúrate que el nombre 'UnidadAcademica' sea correcto
+            // Claves Foráneas (Asegúrate que los nombres de tabla/columna referenciados sean correctos)
             $table->foreign('idUnidadAcademica', 'fk_usuario_unidadacademica')
-                  ->references('idUnidadAcademica')->on('UnidadAcademica')
+                  ->references('idUnidadAcademica')->on('UnidadAcademica') // Asume tabla 'UnidadAcademica'
                   ->onDelete('RESTRICT')
                   ->onUpdate('CASCADE');
 
-            // Asegúrate que el nombre 'rol_admin' y la PK 'id' sean correctos
             $table->foreign('idRolAdmin', 'fk_usuario_roladmin')
-                  ->references('id')->on('rol_admin')
+                  ->references('id')->on('rol_admin') // Asume tabla 'rol_admin' con PK 'id'
                   ->onDelete('SET NULL')
                   ->onUpdate('CASCADE');
         });

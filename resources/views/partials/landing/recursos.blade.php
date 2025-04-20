@@ -1,4 +1,4 @@
-<section class="relative py-16 lg:py-24 bg-white">
+<section class="relative py-16 bg-white">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-4xl lg:text-6xl font-teko font-bold text-left text-ipn-guinda mb-4">
             Recursos Destacados

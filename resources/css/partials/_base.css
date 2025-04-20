@@ -1,0 +1,8 @@
+@layer base{
+    body{
+      font-family: var(--font-family-sans);
+      color: #35081f;
+      @apply antialiased;
+    }
+  }
+  

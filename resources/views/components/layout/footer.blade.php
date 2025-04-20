@@ -1,9 +1,9 @@
 {{-- resources/views/components/layout/footer.blade.php --}}
-<footer class="relative separator-sup-der-dark">
+<footer class="relative ">
 
     {{-- Footer 1: Footer del Sitio (Estilo oscuro - Gris Oscuro IPN) --}}
     {{-- Fondo cambiado a bg-ipn-gray-dark --}}
-    <div class="bg-ipn-guinda-dark text-gray-300 py-12">
+    <div class="relative separator-sup-der-dark bg-ipn-guinda-dark text-gray-300 py-12">
         {{-- Contenedor y Grid estandarizados --}}
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -68,9 +68,7 @@
         </div>
     </div>
 
-    {{-- Footer 2: Footer Estilo Gobierno --}}
-    {{-- Fondo cambiado a ipn-guinda para consistencia con header, padding mantenido --}}
-    <div class="bg-ipn-guinda text-white pt-12">
+    <div class="relative separator-sup-der-dark bg-ipn-guinda text-white pt-12">
          {{-- Contenedor y Grid estandarizados --}}
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             {{-- Grid estandarizado --}}
@@ -125,7 +123,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-full h-auto">
+        <div class="relative separator-sup-der w-full h-auto">
             <img src="{{ asset('images/pleca.svg') }}" alt="Imagen decorativa Pleca Gubernamental" class="w-full h-auto object-cover"
                  onerror="this.style.display='none'; document.getElementById('pleca-fallback-footer').style.display='block'; console.error('Error al cargar pleca.svg')">
             <div class="h-2 bg-gradient-to-r from-red-700 via-green-700 to-purple-800 w-full" style="display: none;" id="pleca-fallback-footer"></div>
