@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+// Asegúrate que el nombre de la clase coincida con el nombre del archivo de migración original
 return new class extends Migration
 {
     /**
@@ -16,7 +17,7 @@ return new class extends Migration
             $table->id()->comment('Identificador único del rol administrativo. PK.'); // PK estándar 'id'
             $table->string('nombreRol', 100)->unique()->comment('Nombre descriptivo del rol. Debe ser único.');
             $table->text('descripcion')->nullable()->comment('Descripción detallada de las funciones del rol.');
-            $table->json('permisos')->nullable()->comment('Estructura JSON que define los permisos específicos.');
+            // $table->json('permisos')->nullable()->comment('Estructura JSON que define los permisos específicos.'); // <-- COLUMNA ELIMINADA
             // No añadimos timestamps si no los necesitas
         });
     }

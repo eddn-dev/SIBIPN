@@ -8,7 +8,7 @@ class ResetPasswordController extends Controller
 {
     use ResetsPasswords;
 
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/mi-sibipn';
 
     public function __construct()
     {

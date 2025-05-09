@@ -150,10 +150,7 @@ export default function registerForm(initialProps) {
                     'X-CSRF-TOKEN': this.csrfToken,
                     'Accept': 'application/json',
                 },
-                body: JSON.stringify({
-                    field: 'email',
-                    value: this.email
-                })
+                body: JSON.stringify({ field: 'email', value: this.email, context: 'public' })
             });
 
              if (!response.ok) {

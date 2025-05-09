@@ -13,6 +13,25 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 [x-cloak] {
     display: none !important;
+}
+
+nav::-webkit-scrollbar {
+    width: 8px; /* Ancho del scrollbar */
+    height: 8px; /* Alto para scrollbar horizontal (si aplicara) */
+}
+
+nav::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.05); /* Fondo del track ligeramente visible */
+    border-radius: 10px; /* Bordes redondeados para el track */
+}
+
+nav::-webkit-scrollbar-thumb {
+    background-color: rgba(184, 157, 93, 0.6); /* Color IPN Oro semitransparente para el thumb */
+    border-radius: 10px; /* Bordes redondeados para el thumb */
+    border: 2px solid transparent; /* Espacio alrededor del thumb (opcional) */
+    background-clip: content-box; /* Asegura que el borde sea transparente */
 }

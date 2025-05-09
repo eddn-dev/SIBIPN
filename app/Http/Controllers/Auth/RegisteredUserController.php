@@ -66,6 +66,6 @@ class RegisteredUserController extends Controller
         // Loguea al nuevo usuario
         Auth::login($usuario);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('sibipn', absolute: false));
     }
 }

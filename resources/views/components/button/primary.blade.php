@@ -6,7 +6,7 @@
 @endphp
 
 {{--  ⬚  WRAPPER «bubble‑box» → permite que el halo quede fuera del <a>  --}}
-<span class="bubble-box">
+<span class="bubble-box w-full sm:w-auto">
     {{-- halo rectangular fijo detrás del botón --}}
     <span class="bubble-halo"></span>
 

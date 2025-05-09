@@ -79,9 +79,9 @@
 
         {{-- CTA “Ver todo” (se mantiene igual, el botón primario funciona bien en fondo claro) --}}
         <div class="text-center mt-12 lg:mt-16">
-            <x-button.secondary href="/noticias" class="px-10">
+            <x-button.primary href="/noticias" class="w-full sm:w-auto text-lg">
                 Ver todo
-            </x-button.secondary>
+            </x-button.primary>
         </div>
 
     </div>

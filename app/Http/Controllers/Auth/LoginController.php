@@ -35,7 +35,7 @@ class LoginController extends Controller
             // 2) Regenera también el token CSRF
             $request->session()->regenerateToken();
 
-            return redirect()->intended('dashboard');
+            return redirect()->intended('sibipn');
         }
 
         return back()->withErrors([

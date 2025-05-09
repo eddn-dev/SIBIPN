@@ -1,13 +1,23 @@
 @layer components{
 
-    .sib-input{
-      @apply block w-full bg-transparent border border-gray-300 rounded-xl
-             px-3 py-2 placeholder-[var(--color-ipn-gray)]
-             text-[var(--color-ipn-gray-dark)]
-             focus:outline-none focus:ring-2 focus:ring-[var(--color-ipn-guinda)]
-             focus:border-[var(--color-ipn-guinda)]
-             transition-colors duration-200;
-    }
+    .sib-input {
+        /* --- Estilos Base (Tema Único Oscuro) --- */
+        @apply block w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-white shadow-sm placeholder-gray-400 transition-colors duration-200 focus:outline-none;
+    
+        /* Foco - Usando ipn-oro para contraste */
+        @apply focus:border-[var(--color-ipn-oro)] focus:ring-2 focus:ring-[var(--color-ipn-oro)];
+    
+        /* --- Estilos para estado de error --- */
+        /* Puedes manejarlo con las directivas @error de Blade como ya haces,
+           asegurándote que los colores de error contrasten bien con el fondo oscuro.
+           Por ejemplo, en Blade usarías:
+           class="sib-input @error('...') border-red-400 focus:ring-red-400 @enderror"
+        */
+        /* Si prefieres una clase específica para error: */
+        /* &.sib-input-error {
+          @apply border-red-400 focus:border-red-400 focus:ring-red-400;
+        } */
+      }
     
     .btn-base{
       @apply inline-flex items-center justify-center gap-2
@@ -15,23 +25,10 @@
              transition-transform duration-200 ease-in-out
              transform relative overflow-hidden;
     }
-
-    /* NUEVO: Botón Primario para Autenticación (Gradiente) */
-    .btn-auth-primary {
-        @apply inline-flex items-center justify-center gap-2
-        px-9 py-3 rounded-full font-medium select-none
-               transition-transform duration-200 ease-in-out
-               transform relative overflow-hidden; /* Hereda estilos base */
-        @apply text-white
-            bg-gradient-to-r from-ipn-guinda to-ipn-guinda-desat
-            hover:from-ipn-guinda-desat hover:to-ipn-guinda
-            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ipn-guinda
-            transform hover:scale-[1.03] active:scale-[0.98]; /* Efecto hover/active */
-    }
     
     .btn-primary{
       @apply inline-flex items-center justify-center gap-2
-              px-9 py-3 rounded-full font-medium select-none
+            px-9 py-2 rounded-full font-medium select-none
              transition-transform duration-200 ease-in-out
              transform relative overflow-hidden
              bg-[var(--color-ipn-gray-lighten)] text-[var(--color-ipn-gray-dark)]
@@ -39,15 +36,48 @@
              focus:ring-2 focus:ring-offset-2 focus:ring-[var(--color-ipn-guinda)];
     }
     
-    .btn-secondary{
-        /* Hereda .btn-base implícitamente o explícitamente si usas @apply btn-base; */
-        @apply bg-ipn-guinda text-[var(--color-ipn-gray-light)]
-               border border-[var(--color-ipn-guinda)] /* Borde guinda */
-               hover:bg-[var(--color-ipn-guinda)] hover:text-white /* Hover: invierte colores */
-               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--color-ipn-guinda)]
-               active:scale-[0.97]; /* Feedback al click */
+    /* --- Botón Secundario Admin (Cancelar, Volver) --- */
+    .btn-secondary {
+        @apply inline-flex items-center justify-center rounded-full border border-ipn-gray-lighten/50 bg-transparent px-9 py-2 text-sm font-semibold shadow-none transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-ipn-guinda-dark focus:ring-ipn-gray-lighten/50 text-ipn-gray-lighten;
+         --tw-ring-offset-color: var(--color-ipn-guinda-dark, #311022);
     }
-    
+    .btn-secondary:hover {
+        @apply bg-white/10; /* Utilidad hover */
+    }
+    .btn-secondary:disabled {
+        @apply cursor-not-allowed opacity-50; /* Utilidades disabled */
+    }
+
+    .btn-tertiary {
+        @apply inline-flex items-center justify-center gap-2
+        px-9 py-2 rounded-full font-medium select-none
+               transition-transform duration-200 ease-in-out
+               transform relative overflow-hidden bg-gray-500/20 text-gray-300 hover:bg-gray-500/40 focus:ring-gray-500/50 shadow-none;
+         /* Offset color para el ring */
+         --tw-ring-offset-color: var(--color-ipn-guinda-dark, #311022);
+    }
+    .btn-tertiary:hover {
+        @apply bg-gray-500/40; /* Utilidad hover */
+    }
+    .btn-tertiary:disabled {
+        @apply cursor-not-allowed opacity-50; /* Utilidades disabled */
+    }
+
+
+    /* --- Botón de Peligro Admin (Eliminar) --- */
+    .btn-danger {
+         /* Aplicando utilidades base + específicas */
+         @apply inline-flex items-center justify-center rounded-full border border-transparent px-9 py-2 text-sm font-semibold shadow-none transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-ipn-guinda-dark focus:ring-red-500 bg-red-700/80 text-white;
+          /* Offset color para el ring */
+         --tw-ring-offset-color: var(--color-ipn-guinda-dark, #311022);
+    }
+     .btn-danger:hover {
+         @apply bg-red-600; /* Utilidad hover */
+     }
+     .btn-danger:disabled {
+         /* Aplicando utilidades para estado deshabilitado */
+         @apply cursor-not-allowed opacity-50 bg-red-700/40;
+     }
     .bubble-box { @apply relative inline-block; }
     
     .bubble-halo {
@@ -127,6 +157,86 @@
     .separator-sup-left-dark::before{ transform:skewY( 1deg); transform-origin:top right; }
     .separator-content-fix     { position:relative; z-index:10; }
     
-    
+    /* --- Estilos para Inputs y Selects del Admin Panel --- */
+    .sib-input-admin {
+        /* Aplicando utilidades base de Tailwind */
+        @apply block w-full rounded-lg border bg-white/5 px-3 py-1.5 text-sm leading-6 text-ipn-gray-lighten placeholder-ipn-gray-lighten/60 transition duration-150 ease-in-out;
+        /* Aplicando borde específico */
+        @apply border-white/15;
+        /* Nota: Los colores como text-ipn-gray-lighten deben estar definidos en tu config de Tailwind o usar variables CSS */
+    }
+    /* Estilo para el placeholder (Tailwind lo maneja con la utilidad `placeholder-*` aplicada arriba) */
+    .sib-input-admin::placeholder {
+         /* No es necesario si se usa la utilidad, pero asegura opacidad si hay conflicto */
+         /* opacity: 1; */
+    }
+    /* Estilo para el foco */
+    .sib-input-admin:focus {
+        @apply outline-none ring-2 ring-offset-ipn-guinda-dark/50; /* Utilidades para anillo de foco */
+        /* Color de borde específico en foco (puede usar variable CSS o color directo) */
+        border-color: var(--color-ipn-guinda-light, theme('colors.pink.600'));
+        /* Color del anillo de foco */
+        --tw-ring-color: var(--color-ipn-guinda-light, theme('colors.pink.600'));
+        --tw-ring-opacity: 0.5;
+        /* Opcional: fondo ligeramente más claro en focus */
+        /* background-color: rgba(255, 255, 255, 0.08); */
+    }
+    /* Estilos específicos para validación */
+    .sib-input-admin.border-red-500 {
+        @apply !border-red-500; /* Utilidad de borde de error */
+    }
+    .sib-input-admin:focus.border-red-500 {
+         @apply ring-red-500/50; /* Utilidad de anillo de error */
+    }
+     .sib-input-admin.border-green-500 {
+        @apply !border-green-500; /* Utilidad de borde de éxito */
+    }
+    .sib-input-admin:focus.border-green-500 {
+         @apply ring-green-500/50; /* Utilidad de anillo de éxito */
+    }
+    /* Estilos para Selects */
+    select.sib-input-admin {
+        @apply pr-10 bg-no-repeat; /* Padding para flecha y no-repeat */
+        /* CSS Personalizado para la flecha SVG */
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.5rem center;
+        background-size: 1.5em 1.5em;
+        appearance: none;
+    }
+    /* Estilo opciones Select (Dropdown) */
+    select.sib-input-admin option {
+        @apply bg-gray-700 text-gray-50; /* Utilidades para estilo de opciones */
+    }
+    select.sib-input-admin option:disabled {
+         @apply text-gray-400; /* Utilidad para opciones deshabilitadas */
+    }
+    /* Estilo para inputs/selects deshabilitados */
+    .sib-input-admin:disabled,
+    select.sib-input-admin:disabled {
+        /* Aplicando utilidades para estado deshabilitado */
+        @apply cursor-not-allowed border-white/10 bg-white/5 text-ipn-gray-lighten/50 opacity-100;
+    }
+
+
+    /* --- Botón Primario Admin (Guardar, Crear - Contraste Claro) --- */
+    .btn-auth-primary {
+        /* Aplicando utilidades base + específicas */
+        @apply inline-flex items-center justify-center rounded-full border border-transparent px-9 py-2 text-sm font-semibold shadow-md transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-ipn-guinda-dark focus:ring-white/50 text-ipn-guinda-dark;
+        /* Gradiente con CSS personalizado */
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+        /* Offset color para el ring */
+         --tw-ring-offset-color: var(--color-ipn-guinda-dark, #311022);
+    }
+
+    .btn-auth-primary:hover {
+        /* Solo cambia el gradiente en hover */
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.9));
+    }
+    .btn-auth-primary:disabled {
+         /* Aplicando utilidades para estado deshabilitado */
+         @apply cursor-not-allowed opacity-50 bg-white/50;
+         background-image: none; /* Quitar gradiente */
+    }
+
 } /* ─── fin @layer components ─── */
     

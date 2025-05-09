@@ -32,7 +32,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         // Redirige al destino previsto (usualmente 'dashboard')
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(route('sibipn', absolute: false));
     }
 
     /**
