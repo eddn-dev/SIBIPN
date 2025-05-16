@@ -116,7 +116,7 @@
              <div class="flex flex-col sm:flex-row items-center gap-4">
                  {{-- Botón Generar --}}
                  {{-- ** CORRECCIÓN AQUÍ: Usar clase de componente btn-secondary ** --}}
-                 <button type="button" @click="generateAndShowNewPassword(16)" class="btn-base btn-secondary">
+                 <button type="button" @click="generateAndShowNewPassword(16)" class="btn-secondary">
                      Generar Contraseña
                  </button>
                  {{-- Campo Display Contraseña --}}
@@ -145,9 +145,9 @@
                         @csrf
                         @method('DELETE')
                         {{-- ** CORRECCIÓN AQUÍ: Usar clase de componente btn-danger ** --}}
-                        <button type="submit" class="btn-base btn-danger"
+                        <button type="submit" class="btn-danger"
                                 {{ Auth::id() === $user->id ? 'disabled' : '' }} >
-                            Eliminar Usuario
+                            Eliminar
                         </button>
                          @if(Auth::id() === $user->id)
                              <p class="text-xs text-red-400 mt-1">No puedes eliminar tu propia cuenta.</p>
@@ -159,12 +159,12 @@
             {{-- Botones Guardar y Cancelar --}}
             <div class="flex items-center space-x-4 mt-4 sm:mt-0">
                  {{-- ** CORRECCIÓN AQUÍ: Usar clase de componente btn-secondary para el enlace Cancelar ** --}}
-                <a href="{{ route('admin.users.index') }}" class="btn-base btn-secondary">
+                <a href="{{ route('admin.users.index') }}" class="btn-secondary">
                     Cancelar
                 </a>
                 {{-- Botón Guardar usa clases correctas --}}
-                <button type="submit" form="update-user-form" class="btn-base btn-auth-primary">
-                    Guardar Cambios
+                <button type="submit" form="update-user-form" class="btn-primary">
+                    Guardar
                 </button>
             </div>
         </div>

@@ -180,11 +180,11 @@
 
              {{-- Botones de Acción --}}
              <div class="flex items-center justify-end space-x-4 pt-5 border-t border-white/10 mt-6">
-                <a href="{{ route('admin.users.index') }}" class="btn-base btn-secondary !text-ipn-gray-lighten !border-ipn-gray-lighten/50 hover:!bg-white/5">
+                <a href="{{ route('admin.users.index') }}" class="btn-secondary !text-ipn-gray-lighten !border-ipn-gray-lighten/50 hover:!bg-white/5">
                     Cancelar
                 </a>
                 {{-- Botón Crear Usuario con :disabled y :class --}}
-                <button type="submit" class="btn-base btn-auth-primary"
+                <button type="submit" class="btn-primary"
                         :disabled="!isFormValid()"
                         :class="{'opacity-50 cursor-not-allowed': !isFormValid()}">
                     Crear Usuario Staff

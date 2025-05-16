@@ -6,13 +6,11 @@
     $tag    = $isLink ? 'a' : 'button';
 @endphp
 
-{{-- Renderiza directamente el botón, sin wrappers ni elementos de efecto halo --}}
 <{{ $tag }}
     {{ $isLink ? "href=$href" : "type=$type" }}
-    {{ $attributes->class('btn-base btn-secondary') }}>
+    {{ $attributes->class('btn-ripple-secondary') }}>
 
-    {{-- Contenido visible simple --}}
-    <span class="flex items-center gap-2">
+    <span class="btn-label flex items-center gap-2 relative z-10">
         {{ $slot }}
     </span>
 </{{ $tag }}>

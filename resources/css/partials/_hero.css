@@ -1,0 +1,13 @@
+/* resources/css/partials/_hero.css */
+
+#hero-overlay{
+  pointer-events:none;   /* no bloquea clics ni focus */            /* :contentReference[oaicite:5]{index=5} */
+  transform:scale(1.05); /* cubre margen al moverse el mosaico */
+  will-change:transform;
+}
+#hero-mosaic-container{
+  will-change:transform, filter; /* mejora rendimiento parallax */
+}
+#hero-buttons-container{          /* evita que el botón se desborde */
+  flex-wrap:wrap;
+}

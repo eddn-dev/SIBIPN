@@ -5,12 +5,16 @@
     --color-ipn-guinda-desat:   #5B262E;
     --color-ipn-gray-dark:      #333333;
     --color-ipn-gray:           #999999;
-    --color-ipn-gray-lighten:   #e5a5c1;
+    --color-ipn-gray-lighten:   #E5A5C1;
     --color-ipn-gray-light:     #F1F1F1;
-    --color-ipn-oro:         #D6C9A8;
+    --color-ipn-oro:            #f2e5c3;
+    --color-ipn-oro-dark:       #4d3401;
   
     --font-family-sans:     'Open Sans', ui-sans-serif, system-ui, sans-serif;
     --font-family-roboto:   'Roboto',    sans-serif;
     --font-family-teko:     'Teko',      sans-serif;
 }
   
+body{
+    color: #f2e5c3;
+}

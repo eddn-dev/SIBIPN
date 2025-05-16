@@ -12,8 +12,20 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen">
-
-    <x-layout.header /> {{-- Llama al componente header --}}
+    @once
+        <div style="display: none; position: absolute; width: 0; height: 0; overflow: hidden;">
+            @php
+                $spritePath = resource_path('icons/sprite.svg');
+                echo file_get_contents($spritePath);
+                if (file_exists($spritePath)) {
+                    echo file_get_contents($spritePath);
+                } else {Log::error("Archivo de sprite SVG no encontrado en: " . $spritePath);
+                    echo "";
+                }
+            @endphp
+        </div>
+    @endonce
+    <x-layout.header />
 
     {{-- Contenedor principal de la página --}}   
 

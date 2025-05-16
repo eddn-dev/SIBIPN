@@ -56,7 +56,7 @@
 
                 <div class="flex justify-end mt-4">
                     {{-- Botón (Clases sin cambios) --}}
-                    <button type="submit" class="btn-base btn-auth-primary text-sm"> {{-- Tamaño texto ajustado --}}
+                    <button type="submit" class="btn-primary text-sm"> {{-- Tamaño texto ajustado --}}
                         Confirmar
                     </button>
                 </div>

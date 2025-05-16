@@ -1,16 +1,32 @@
 @layer utilities {
-    .section-dark{
-      @apply bg-[--color-ipn-guinda] text-white;
-    }
-  
-    /* textos secundarios gris‑claro sobre fondo guinda */
-    .section-dark .text-muted{
-      color: var(--color-ipn-gray-light);
-    }
-  
-    /* títulos en blanco  */
-    .section-dark h2,
-    .section-dark h3{
-      @apply text-white;
-    }
+
+  .mask-position-center{ mask-position:center; }
+
+  .clip-circle { clip-path: circle(var(--r,0vmax) at 50% 50%); }
+
+  .bg-cta-gradient {
+    background-image:
+      radial-gradient(at 30% 30%, rgb(214 201 168 / .12) 0%, transparent 45%),
+      linear-gradient(135deg,
+        var(--color-ipn-guinda-dark) 0%,
+        var(--color-ipn-guinda) 50%,
+        var(--color-ipn-guinda-light) 100%);
+    background-size: 300% 300%;      /* margen para animar */
   }
+
+  /* Animación automática del gradiente (~16 s loop) ----------- */
+  @keyframes gradient-pan {
+    0%,100% { background-position: 0% 0%; }
+    50%     { background-position: 100% 100%; }
+  }
+  .animate-gradient-pan { animation: gradient-pan 16s linear infinite; }
+}
+
+@utility btn-base{
+    @apply inline-flex items-center justify-center gap-2
+           rounded-full px-6 py-2 font-medium
+           transition-transform duration-200 ease-in-out
+           focus:outline-none focus-visible:ring-2
+           relative overflow-hidden;
+    cursor: pointer;
+}

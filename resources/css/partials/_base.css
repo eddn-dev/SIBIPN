@@ -4,5 +4,10 @@
       color: #35081f;
       @apply antialiased;
     }
+}
+
+@layer components {
+  header[data-animated].scrolled {
+    @apply bg-ipn-guinda/80 backdrop-blur-md shadow-md;
   }
-  
+}

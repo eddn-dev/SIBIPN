@@ -1,9 +1,9 @@
 @import 'tailwindcss';
+@import 'lenis/dist/lenis.css';
 @import 'partials/_theme.css';
 @import 'partials/_base.css';       /* Contiene tu @layer base {...} */
 @import 'partials/_components.css'; /* Contiene tu @layer components {...} */
 @import 'partials/_utilities.css';  /* Contiene tu @layer utilities {...} y .separator-* */
-
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
@@ -35,3 +35,4 @@ nav::-webkit-scrollbar-thumb {
     border: 2px solid transparent; /* Espacio alrededor del thumb (opcional) */
     background-clip: content-box; /* Asegura que el borde sea transparente */
 }
+

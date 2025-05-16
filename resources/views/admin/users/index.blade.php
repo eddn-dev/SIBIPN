@@ -14,7 +14,7 @@
         </div>
         {{-- Botón Crear Usuario --}}
         @can('gestionar-usuarios') {{-- O 'crear-usuarios' --}}
-            <a href="{{ route('admin.users.create') }}" class="btn-base btn-auth-primary mt-4 sm:mt-0 whitespace-nowrap inline-flex items-center">
+            <a href="{{ route('admin.users.create') }}" class="btn-primary mt-4 sm:mt-0 whitespace-nowrap inline-flex items-center">
                <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
                Crear Usuario
             </a>
@@ -121,9 +121,9 @@
 
                 {{-- Botones Aplicar y Limpiar Filtros --}}
                  <div class="flex space-x-2">
-                     <button type="submit" class="btn-base btn-secondary !text-ipn-gray-lighten !border-ipn-gray-lighten/50 hover:!bg-white/5 w-full !py-2 !px-4 text-sm">Filtrar</button>
+                     <button type="submit" class="btn-secondary">Filtrar</button>
                      {{-- Botón para limpiar filtros (redirige a la misma ruta sin parámetros) --}}
-                     <a href="{{ route('admin.users.index') }}" class="btn-base !bg-gray-500/20 hover:!bg-gray-500/40 text-gray-300 w-full !py-2 !px-4 text-sm text-center">Limpiar</a>
+                     <a href="{{ route('admin.users.index') }}" class="btn-danger">Limpiar</a>
                  </div>
             </div>
         </form>

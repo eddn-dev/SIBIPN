@@ -47,7 +47,7 @@
             <form method="POST" action="{{ route('verification.send') }}">
                 @csrf
                 {{-- Aplicando clases estándar --}}
-                <button type="submit" class="btn-base btn-auth-primary w-full text-base">
+                <button type="submit" class="btn-primary w-full text-base">
                     Reenviar correo de verificación
                 </button>
             </form>

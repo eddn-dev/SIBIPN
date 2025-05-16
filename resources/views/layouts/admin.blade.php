@@ -18,7 +18,19 @@
     @stack('styles')
 </head>
 <body class="font-sans antialiased bg-ipn-guinda-dark text-ipn-gray-lighten">
-
+    @once
+        <div style="display: none; position: absolute; width: 0; height: 0; overflow: hidden;">
+            @php
+                $spritePath = resource_path('icons/sprite.svg'); // Ajusta la ruta si es necesario
+                if (file_exists($spritePath)) {
+                    echo file_get_contents($spritePath);
+                } else {
+                    Log::error("Archivo de sprite SVG no encontrado en: " . $spritePath);
+                    echo "";
+                }
+            @endphp
+        </div>
+    @endonce
     {{-- Contenedor Principal --}}
     {{-- Utilizamos Alpine.js para manejar la apertura/cierre del sidebar --}}
     {{-- Puedes usar Livewire o Vue.js si lo prefieres, pero aquí es solo HTML y Alpine.js --}}

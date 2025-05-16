@@ -79,7 +79,7 @@
                 </div>
 
                 {{-- Botón (Clases sin cambios) --}}
-                <button type="submit" class="btn-base btn-auth-primary w-full text-base">
+                <button type="submit" class="btn-primary w-full text-base">
                     Restablecer contraseña
                 </button>
             </form>

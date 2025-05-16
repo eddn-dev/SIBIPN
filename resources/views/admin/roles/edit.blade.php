@@ -110,11 +110,11 @@
             {{-- Botones de Acción --}}
             <div class="flex items-center justify-end space-x-4 pt-5 mt-6 {{ $isSystemAdmin ? '' : 'border-t border-white/10' }}">
                  {{-- Enlace Cancelar/Volver --}}
-                <a href="{{ route('admin.roles.index') }}" class="btn-base btn-secondary">
+                <a href="{{ route('admin.roles.index') }}" class="btn-secondary">
                     {{ $isSystemAdmin ? 'Volver' : 'Cancelar' }}
                 </a>
                  {{-- Botón Guardar --}}
-                <button type="submit" class="btn-base btn-auth-primary" @if($isSystemAdmin) disabled title="Los permisos de este rol no se pueden modificar" @endif>
+                <button type="submit" class="btn-primary" @if($isSystemAdmin) disabled title="Los permisos de este rol no se pueden modificar" @endif>
                     Guardar Permisos
                 </button>
             </div>

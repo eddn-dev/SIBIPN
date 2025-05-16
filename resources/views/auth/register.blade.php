@@ -165,14 +165,14 @@
 
                 {{-- Navegación y Envío (Botones sin cambios de clase) --}}
                 {{-- Asegúrate que las clases btn-* funcionen bien en fondo oscuro --}}
-                <div class="flex items-center justify-between pt-4 mt-auto">
-                    <button type="button" @click="step--" class="btn-base btn-secondary" :class="step === 1 ? 'invisible' : ''">
+                <div class="flex items-center justify-between mt-auto">
+                    <button type="button" @click="step--" class="btn-secondary" :class="step === 1 ? 'invisible' : ''">
                         &larr; Anterior
                     </button>
-                    <button type="button" @click="step++" x-show="step < maxStep" :disabled="!isStepValid() || (step === 2 && boletaChecking)" class="btn-base btn-auth-primary ml-auto disabled:opacity-50 disabled:cursor-not-allowed" x-cloak>
+                    <button type="button" @click="step++" x-show="step < maxStep" :disabled="!isStepValid() || (step === 2 && boletaChecking)" class="btn-primary ml-auto disabled:opacity-50 disabled:cursor-not-allowed" x-cloak>
                         Siguiente &rarr;
                     </button>
-                    <button type="submit" x-show="step === maxStep" :disabled="!isStepValid() || emailChecking" class="btn-base btn-auth-primary ml-auto disabled:opacity-50 disabled:cursor-not-allowed" x-cloak>
+                    <button type="submit" x-show="step === maxStep" :disabled="!isStepValid() || emailChecking" class="btn-primary ml-auto disabled:opacity-50 disabled:cursor-not-allowed" x-cloak>
                         Finalizar Registro
                     </button>
                 </div>

@@ -1,142 +1,13 @@
-@layer components{
+/* importar _utilities*/
+@import './_utilities.css';
 
+@layer components{
     .sib-input {
         /* --- Estilos Base (Tema Único Oscuro) --- */
         @apply block w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-white shadow-sm placeholder-gray-400 transition-colors duration-200 focus:outline-none;
     
         /* Foco - Usando ipn-oro para contraste */
         @apply focus:border-[var(--color-ipn-oro)] focus:ring-2 focus:ring-[var(--color-ipn-oro)];
-    
-        /* --- Estilos para estado de error --- */
-        /* Puedes manejarlo con las directivas @error de Blade como ya haces,
-           asegurándote que los colores de error contrasten bien con el fondo oscuro.
-           Por ejemplo, en Blade usarías:
-           class="sib-input @error('...') border-red-400 focus:ring-red-400 @enderror"
-        */
-        /* Si prefieres una clase específica para error: */
-        /* &.sib-input-error {
-          @apply border-red-400 focus:border-red-400 focus:ring-red-400;
-        } */
-      }
-    
-    .btn-base{
-      @apply inline-flex items-center justify-center gap-2
-      px-9 py-3 rounded-full font-medium select-none
-             transition-transform duration-200 ease-in-out
-             transform relative overflow-hidden;
-    }
-    
-    .btn-primary{
-      @apply inline-flex items-center justify-center gap-2
-            px-9 py-2 rounded-full font-medium select-none
-             transition-transform duration-200 ease-in-out
-             transform relative overflow-hidden
-             bg-[var(--color-ipn-gray-lighten)] text-[var(--color-ipn-gray-dark)]
-             border border-[var(--color-white)]
-             focus:ring-2 focus:ring-offset-2 focus:ring-[var(--color-ipn-guinda)];
-    }
-    
-    /* --- Botón Secundario Admin (Cancelar, Volver) --- */
-    .btn-secondary {
-        @apply inline-flex items-center justify-center rounded-full border border-ipn-gray-lighten/50 bg-transparent px-9 py-2 text-sm font-semibold shadow-none transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-ipn-guinda-dark focus:ring-ipn-gray-lighten/50 text-ipn-gray-lighten;
-         --tw-ring-offset-color: var(--color-ipn-guinda-dark, #311022);
-    }
-    .btn-secondary:hover {
-        @apply bg-white/10; /* Utilidad hover */
-    }
-    .btn-secondary:disabled {
-        @apply cursor-not-allowed opacity-50; /* Utilidades disabled */
-    }
-
-    .btn-tertiary {
-        @apply inline-flex items-center justify-center gap-2
-        px-9 py-2 rounded-full font-medium select-none
-               transition-transform duration-200 ease-in-out
-               transform relative overflow-hidden bg-gray-500/20 text-gray-300 hover:bg-gray-500/40 focus:ring-gray-500/50 shadow-none;
-         /* Offset color para el ring */
-         --tw-ring-offset-color: var(--color-ipn-guinda-dark, #311022);
-    }
-    .btn-tertiary:hover {
-        @apply bg-gray-500/40; /* Utilidad hover */
-    }
-    .btn-tertiary:disabled {
-        @apply cursor-not-allowed opacity-50; /* Utilidades disabled */
-    }
-
-
-    /* --- Botón de Peligro Admin (Eliminar) --- */
-    .btn-danger {
-         /* Aplicando utilidades base + específicas */
-         @apply inline-flex items-center justify-center rounded-full border border-transparent px-9 py-2 text-sm font-semibold shadow-none transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-ipn-guinda-dark focus:ring-red-500 bg-red-700/80 text-white;
-          /* Offset color para el ring */
-         --tw-ring-offset-color: var(--color-ipn-guinda-dark, #311022);
-    }
-     .btn-danger:hover {
-         @apply bg-red-600; /* Utilidad hover */
-     }
-     .btn-danger:disabled {
-         /* Aplicando utilidades para estado deshabilitado */
-         @apply cursor-not-allowed opacity-50 bg-red-700/40;
-     }
-    .bubble-box { @apply relative inline-block; }
-    
-    .bubble-halo {
-        @apply absolute inset-y-[-15%] left-[-5%] right-[-5%] rounded-full
-        opacity-0 transition-opacity duration-300 ease-in-out
-        pointer-events-none;
-    
-        background: linear-gradient(to right,
-        #fc9ecd66 0%, 
-        #fc9ecd22 40%,
-        transparent 60%); /* Fade out más rápido */
-    
-        filter: blur(12px); /* Blur para el rastro */
-        z-index: 0;
-    
-        position: absolute;
-    }
-    
-    .bubble-halo::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        width: 85px;
-        height: 85px;
-        border-radius: 50%;
-    
-        background: radial-gradient(circle at 50% 50%,
-            rgba(255, 255, 255, 0.9) 0%, /* Blanco brillante en el centro */
-            rgba(243, 200, 213, 0.7) 50%, /* Rosa F3C8D5 con alpha */
-            transparent 70%); /* Fade out */
-    
-        filter: blur(8px); /* Un blur ligeramente menor que el halo base */
-        left: 0;
-        transform: translateY(-50%) translateX(-20%); /* Desplazado un poco hacia adentro */
-        transition: left 0.4s ease, right 0.4s ease, transform 0.4s ease;
-        z-index: 1;
-    }
-    
-    .bubble-halo.halo-glow-right::after {
-        left: auto; /* Desactiva 'left' */
-        right: 0; /* Activa 'right' */
-        transform: translateY(-50%);
-    }
-    
-    .bubble-track{
-        @apply absolute top-1/2 h-[120px] w-[120px] -translate-y-1/2;
-        left:50%;                  /* reposicionado en X por JS */
-        pointer-events:none;
-        z-index:0;
-    }
-    
-    .bubble-core{
-        @apply absolute inset-0 rounded-full;
-        filter: blur(6px);
-        background:radial-gradient(circle at 50% 50%,
-            #ffffff               0%,
-            #f3c8d5              50%,
-            #eccaca              70%,
-            var(--color-ipn-gray-lighten) 100%);
     }
 
     .separator-sup-der::before,
@@ -165,11 +36,7 @@
         @apply border-white/15;
         /* Nota: Los colores como text-ipn-gray-lighten deben estar definidos en tu config de Tailwind o usar variables CSS */
     }
-    /* Estilo para el placeholder (Tailwind lo maneja con la utilidad `placeholder-*` aplicada arriba) */
-    .sib-input-admin::placeholder {
-         /* No es necesario si se usa la utilidad, pero asegura opacidad si hay conflicto */
-         /* opacity: 1; */
-    }
+
     /* Estilo para el foco */
     .sib-input-admin:focus {
         @apply outline-none ring-2 ring-offset-ipn-guinda-dark/50; /* Utilidades para anillo de foco */
@@ -216,27 +83,106 @@
         /* Aplicando utilidades para estado deshabilitado */
         @apply cursor-not-allowed border-white/10 bg-white/5 text-ipn-gray-lighten/50 opacity-100;
     }
+    /* --- Botón Primario Admin (Guardar, Crear) --- */
+    .btn-primary{
+        @apply btn-base border-2;
+        --bgColor   : var(--color-ipn-oro);
+        --borderCol : var(--color-ipn-gray-light);
+        --textCol   : var(--color-ipn-guinda);
 
-
-    /* --- Botón Primario Admin (Guardar, Crear - Contraste Claro) --- */
-    .btn-auth-primary {
-        /* Aplicando utilidades base + específicas */
-        @apply inline-flex items-center justify-center rounded-full border border-transparent px-9 py-2 text-sm font-semibold shadow-md transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-ipn-guinda-dark focus:ring-white/50 text-ipn-guinda-dark;
-        /* Gradiente con CSS personalizado */
-        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
-        /* Offset color para el ring */
-         --tw-ring-offset-color: var(--color-ipn-guinda-dark, #311022);
+        background   : var(--bgColor);
+        border-color : var(--borderCol);
+        color        : var(--textCol);
+    }
+    .btn-primary:hover{
+        background-color: var(--color-ipn-gray-light);
     }
 
-    .btn-auth-primary:hover {
-        /* Solo cambia el gradiente en hover */
-        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.9));
-    }
-    .btn-auth-primary:disabled {
-         /* Aplicando utilidades para estado deshabilitado */
-         @apply cursor-not-allowed opacity-50 bg-white/50;
-         background-image: none; /* Quitar gradiente */
+
+    .btn-secondary{
+        /* variables para poder animar o heredar ripple si quieres */
+        --bgColor   : transparent;
+        --borderCol : rgb(229 165 193 / .5);       /* ipn-gray-lighten @ 50 % */
+        --textCol   : var(--color-ipn-gray-lighten);
+
+        @apply btn-base border-2 transition-colors duration-200;
+        background   : var(--bgColor);
+        border-color : var(--borderCol);
+        color        : var(--textCol);
     }
 
-} /* ─── fin @layer components ─── */
+    .btn-secondary:hover{
+        background: rgba(255 255 255 / .05);       /* bg-white/5 */
+    }
+    .btn-tertiary{
+        @apply btn-base border-2;
+        --bgColor   : var(--color-ipn-gray-light);
+        --borderCol : var(--color-ipn-gray-dark);
+        --textCol   : var(--color-ipn-gray-dark);
+
+        background   : var(--bgColor);
+        border-color : var(--borderCol);
+        color        : var(--textCol);
+    }
+
+    .btn-tertiary:hover{
+        background: var(--color-ipn-gray-dark);
+        color: var(--color-ipn-gray-light);
+    }
+
+    .btn-danger{
+        @apply btn-base border-2;
+        --bgColor   : transparent;
+        --borderCol : #dc2626;      /* red-600 */
+        --textCol   : #dc2626;
+        --burstColor: #dc2626;
+
+        background   : var(--bgColor);
+        border-color : var(--borderCol);
+        color        : var(--textCol);
+    }
+    .btn-danger:hover{
+        background: rgba(220,38,38,.1);
+    }
+    .btn-danger:disabled{
+        @apply opacity-50 cursor-not-allowed;
+    }
+
+    .btn-ripple{
+        --bgColor   : var(--color-ipn-gray-light);
+        --borderCol : var(--color-ipn-guinda);
+        --textCol   : var(--color-ipn-guinda);
+        --burstColor: var(--color-ipn-guinda);
+
+        @apply btn-base border-2;             
+        background   : var(--bgColor);
+        border-color : var(--borderCol);
+        color        : var(--textCol);
+    }
+
+    .btn-ripple .burst{
+        @apply absolute inset-0 pointer-events-none;
+        --x:50%; --y:50%;
+        clip-path:circle(0 at var(--x) var(--y));
+        background: var(--color-ipn-guinda);
+    }
+
+    .btn-ripple-secondary{
+        --bgColor   : var(--color-ipn-guinda);
+        --borderCol : var(--color-ipn-gray-light);
+        --textCol   : var(--color-ipn-gray-light);
+        --burstColor: var(--color-ipn-gray-light);
+
+        @apply btn-base border-2;
+        background: var(--bgColor);
+        border-color: var(--borderCol);
+        color: var(--textCol);
+    }
+
+    .btn-ripple-secondary .burst{
+        @apply absolute inset-0 pointer-events-none;
+        clip-path: circle(0 at var(--x,50%) var(--y,50%));
+        background: var(--burstColor);
+    }
+}
     

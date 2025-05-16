@@ -106,7 +106,7 @@
                     {{-- Las clases btn-base y btn-auth-primary se mantienen --}}
                     {{-- Asegúrate que estas clases funcionen bien en fondo oscuro o ajústalas globalmente --}}
                     <button type="submit"
-                            class="btn-base btn-auth-primary w-full text-base"> {{-- Ajustado tamaño texto --}}
+                            class="btn-primary w-full text-base"> {{-- Ajustado tamaño texto --}}
                         Iniciar Sesión
                     </button>
                 </div>
