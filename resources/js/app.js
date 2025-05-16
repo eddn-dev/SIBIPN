@@ -8,6 +8,7 @@ import collapse  from '@alpinejs/collapse';
 import attachBubbleCTA     from './bubble.js';
 import registerForm        from './components/registerForm';
 import adminCreateUserForm from './components/adminCreateUserForm';
+import adminCatalogForm   from './components/adminCatalogForm';
 
 import Lenis  from 'lenis';
 import gsap   from 'gsap';
@@ -42,6 +43,7 @@ gsap.ticker.lagSmoothing(0);
 // ---------- Alpine ----------
 Alpine.data('registerForm',      registerForm);
 Alpine.data('adminCreateUserForm', adminCreateUserForm);
+Alpine.data('adminCatalogForm',   adminCatalogForm);
 Alpine.data('bubbleCTA',         attachBubbleCTA);
 
 Alpine.plugin(intersect);
