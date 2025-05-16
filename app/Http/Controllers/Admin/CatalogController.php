@@ -21,13 +21,23 @@ class CatalogController extends Controller
         $query = RegistroBibliografico::query()->orderBy('titulo');
 
         if ($search = $request->input('search')) {
-            $query->where('titulo', 'like', "%{$search}%")
+            $query->where(function ($q) use ($search) {
+                $q->where('titulo', 'like', "%{$search}%")
                   ->orWhere('autor_principal', 'like', "%{$search}%");
+            });
+        }
+
+        if ($type = $request->input('type')) {
+            $query->where('tipo_material', $type);
         }
 
         $records = $query->paginate(15)->withQueryString();
 
-        return view('admin.catalog.index', compact('records'));
+        $tipos = [
+            'Libro','Tesis','Revista','Articulo','Audiovisual','RecursoElectronico','Otro'
+        ];
+
+        return view('admin.catalog.index', compact('records', 'tipos'));
     }
 
     /**
