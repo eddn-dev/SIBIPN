@@ -64,9 +64,24 @@ class CatalogController extends Controller
             'isbn' => ['nullable', 'string', 'max:20'],
             'issn' => ['nullable', 'string', 'max:20'],
             'tipo_material' => ['required', 'in:Libro,Tesis,Revista,Articulo,Audiovisual,RecursoElectronico,Otro'],
+            'es_digital' => ['nullable', 'boolean'],
+            'digital_files.*' => ['file'],
+            'es_publico' => ['nullable', 'boolean'],
         ]);
 
-        RegistroBibliografico::create($validated);
+        $record = RegistroBibliografico::create($validated);
+
+        if ($request->hasFile('digital_files')) {
+            foreach ($request->file('digital_files') as $file) {
+                $disk = $request->boolean('es_publico') ? 'public' : 'local';
+                $path = $file->store('digital_items', $disk);
+                $record->digitalItems()->create([
+                    'archivo_path' => $path,
+                    'mime_type' => $file->getClientMimeType(),
+                    'es_publico' => $request->boolean('es_publico'),
+                ]);
+            }
+        }
 
         return redirect()->route('admin.catalog.index')->with('success', 'Registro creado correctamente.');
     }
@@ -95,9 +110,24 @@ class CatalogController extends Controller
             'isbn' => ['nullable', 'string', 'max:20'],
             'issn' => ['nullable', 'string', 'max:20'],
             'tipo_material' => ['required', 'in:Libro,Tesis,Revista,Articulo,Audiovisual,RecursoElectronico,Otro'],
+            'es_digital' => ['nullable', 'boolean'],
+            'digital_files.*' => ['file'],
+            'es_publico' => ['nullable', 'boolean'],
         ]);
 
         $catalog->update($validated);
+
+        if ($request->hasFile('digital_files')) {
+            foreach ($request->file('digital_files') as $file) {
+                $disk = $request->boolean('es_publico') ? 'public' : 'local';
+                $path = $file->store('digital_items', $disk);
+                $catalog->digitalItems()->create([
+                    'archivo_path' => $path,
+                    'mime_type' => $file->getClientMimeType(),
+                    'es_publico' => $request->boolean('es_publico'),
+                ]);
+            }
+        }
 
         return redirect()->route('admin.catalog.index')->with('success', 'Registro actualizado correctamente.');
     }

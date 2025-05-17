@@ -40,6 +40,8 @@ use App\Http\Controllers\Admin\CommunityGroupController;
 use App\Http\Controllers\Admin\CommunityGroupMemberController;
 use App\Http\Controllers\Admin\CommunityReportController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\DigitalItemController;
+use App\Http\Controllers\DigitalItemDownloadController;
 // Asegúrate de crear estos controladores o ajustar los namespaces si es necesario
 
 /*
@@ -67,6 +69,9 @@ Route::middleware('auth')->group(function () {
 Route::post('/auth/check-field', [ValidationController::class, 'checkField'])
      ->middleware('web')
      ->name('auth.checkField');
+
+Route::get('digital-items/{digitalItem}', DigitalItemDownloadController::class)
+    ->name('digital-items.show');
 
 
 /*
@@ -102,6 +107,12 @@ Route::middleware(['auth', 'verified', 'can:acceder-panel-admin'])
         ->shallow()
         ->except(['show'])
         ->middleware('can:gestionar-items');
+    Route::post('catalog/{catalog}/digital-items', [DigitalItemController::class, 'store'])
+        ->name('catalog.digital-items.store')
+        ->middleware('can:gestionar-registros-bib');
+    Route::delete('digital-items/{digitalItem}', [DigitalItemController::class, 'destroy'])
+        ->name('digital-items.destroy')
+        ->middleware('can:gestionar-registros-bib');
     Route::resource('items', ItemController::class)
         ->except(['show'])
         ->middleware('can:gestionar-items');

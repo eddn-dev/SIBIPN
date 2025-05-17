@@ -1,6 +1,7 @@
 export default function adminCatalogForm(initialProps) {
     return {
         autores: initialProps.autores || [],
+        esDigital: initialProps.esDigital || false,
         nuevoAutor: '',
         addAutor() {
             if (this.nuevoAutor.trim() !== '') {

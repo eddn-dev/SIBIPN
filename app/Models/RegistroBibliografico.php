@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\DigitalItem;
 
 class RegistroBibliografico extends Model
 {
@@ -33,4 +35,9 @@ class RegistroBibliografico extends Model
         'datos_marc',
         'es_digital',
     ];
+    
+    public function digitalItems(): HasMany
+    {
+        return $this->hasMany(DigitalItem::class, 'idRegistroBibliografico', 'idRegistro');
+    }
 }

@@ -2,8 +2,9 @@
     $isEdit = isset($record);
     $autoresSec = old('autores_secundarios', $record->autores_secundarios ?? '');
     $autoresArray = $autoresSec ? explode(';', $autoresSec) : [];
+    $esDigital = old('es_digital', $record->es_digital ?? false);
 @endphp
-<div class="space-y-4" x-data="adminCatalogForm({ autores: @js($autoresArray) })">
+<div class="space-y-4" x-data="adminCatalogForm({ autores: @js($autoresArray), esDigital: @js((bool)$esDigital) })">
     <div>
         <label class="block text-sm font-medium text-ipn-gray-lighten mb-1">T\xC3\xADtulo</label>
         <input type="text" name="titulo" value="{{ old('titulo', $record->titulo ?? '') }}" class="sib-input-admin" required>
@@ -53,6 +54,37 @@
                 <option value="{{ $tipo }}" @selected(old('tipo_material', $record->tipo_material ?? '') == $tipo)>{{ $tipo }}</option>
             @endforeach
         </select>
+    </div>
+        <div class="mt-4">
+        <label class="inline-flex items-center">
+            <input type="checkbox" name="es_digital" value="1" x-model="esDigital" class="sib-input-checkbox" @checked($esDigital)>
+            <span class="ml-2">¿Recurso Digital?</span>
+        </label>
+    </div>
+    <div x-show="esDigital" class="mt-4 space-y-2">
+        <label class="block text-sm font-medium text-ipn-gray-lighten">Archivos Digitales</label>
+        <input type="file" name="digital_files[]" multiple class="sib-input-admin">
+        <label class="inline-flex items-center mt-2">
+            <input type="checkbox" name="es_publico" value="1" class="sib-input-checkbox" checked>
+            <span class="ml-2">Acceso público</span>
+        </label>
+
+        @if($isEdit && $record->digitalItems->count())
+            <ul class="mt-4 space-y-1">
+                @foreach($record->digitalItems as $item)
+                    <li class="flex items-center space-x-2 text-sm">
+                        <a href="{{ route('digital-items.show', $item) }}" target="_blank" class="underline">
+                            {{ basename($item->archivo_path) }}
+                        </a>
+                        <form action="{{ route('admin.digital-items.destroy', $item) }}" method="POST" onsubmit="return confirm('¿Eliminar archivo?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-400 hover:text-red-200">&times;</button>
+                        </form>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
     </div>
 </div>
 <div class="mt-6">
