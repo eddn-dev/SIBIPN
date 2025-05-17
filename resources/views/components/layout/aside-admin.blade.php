@@ -52,6 +52,15 @@
                     Catálogo
                 </a>
             </li>
+            @can('gestionar-items')
+                <li>
+                    <a href="{{ route('admin.items.index') }}" class="flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 {{ request()->routeIs('admin.items.*') ? 'bg-white/10 text-white' : 'text-ipn-gray-lighten hover:text-white hover:bg-white/5' }}">
+                        {{-- Icono Items --}}
+                        <svg class="mr-3 h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 5v14H5V5h14ZM5 7h14" /></svg>
+                        Ejemplares
+                    </a>
+                </li>
+            @endcan
         @endcanany
 
          {{-- Circulación: Requiere algún permiso de circulación --}}
