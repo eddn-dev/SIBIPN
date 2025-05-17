@@ -99,6 +99,7 @@ Route::middleware(['auth', 'verified', 'can:acceder-panel-admin'])
     Route::post('catalog/import', [CatalogController::class, 'processImport'])->name('catalog.import.process')->middleware('can:importar-exportar-registros-bib');
     Route::get('catalog/export', [CatalogController::class, 'exportSelection'])->name('catalog.export')->middleware('can:importar-exportar-registros-bib');
     Route::resource('catalog.items', ItemController::class)->shallow()->middleware('can:gestionar-items');
+    Route::resource('items', ItemController::class)->middleware('can:gestionar-items');
     Route::post('items/assign-ids', [ItemController::class, 'assignIds'])->name('items.assign-ids')->middleware('can:asignar-id-item');
     Route::post('items/update-status-location', [ItemController::class, 'updateStatusLocation'])->name('items.update-status-location')->middleware('can:gestionar-ubicacion-estado-item');
     Route::resource('authorities', AuthorityController::class)->middleware('can:gestionar-autoridades');
