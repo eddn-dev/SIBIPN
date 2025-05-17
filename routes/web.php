@@ -70,7 +70,7 @@ Route::post('/auth/check-field', [ValidationController::class, 'checkField'])
      ->middleware('web')
      ->name('auth.checkField');
 
-Route::get('digital-items/{digitalItem}', DigitalItemDownloadController::class)
+Route::get('digital-items/{digitalItem}', [DigitalItemDownloadController::class, '__invoke'])
     ->name('digital-items.show');
 
 
